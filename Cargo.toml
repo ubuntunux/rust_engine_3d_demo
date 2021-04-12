@@ -9,7 +9,7 @@ readme = "RustEngine3D-Demo"
 edition = "2018"
 
 [dependencies]
-rust_engine_3d = { git = "https://github.com/ubuntunux/RustEngine3D" }
+rust_engine_3d = { path = "RustEngine3D" }
 ash = "0.31.0"
 ash-window = "0.5.0"
 bincode = "1.2.1"

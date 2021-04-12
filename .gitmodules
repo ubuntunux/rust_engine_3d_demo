@@ -1,0 +1,4 @@
+[submodule "RustEngine3D"]
+	path = RustEngine3D
+	url = https://github.com/ubuntunux/RustEngine3D
+	branch = master
