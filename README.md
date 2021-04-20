@@ -12,7 +12,9 @@ cargo run --release
 
 # run on android
 - run first linux or windows cause generate resources.txt and shader cahces
+```
 ./run_android.sh
+```
 
 # dependency
 now use ndk-glue 0.2 but ndk-glue 0.3 for audio.
