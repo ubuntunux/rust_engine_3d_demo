@@ -2,7 +2,9 @@
 RustEngine3D Demo
 
 # install
+```
 git clone https://github.com/ubuntunux/rust_engine_3d_demo --recursive
+```
 
 # update
 git submodule update --recursive
