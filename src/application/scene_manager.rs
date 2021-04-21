@@ -7,8 +7,10 @@ use nalgebra::{
 };
 
 use rust_engine_3d::constants;
+use rust_engine_3d::application::application::TimeData;
 use rust_engine_3d::application::scene_manager::{ SceneManagerBase, SceneManagerData };
 use rust_engine_3d::renderer::effect::{EffectCreateInfo, EffectInstance, EffectManagerData, EffectManagerBase};
+use rust_engine_3d::renderer::font::FontManager;
 use rust_engine_3d::renderer::renderer::RendererData;
 use rust_engine_3d::renderer::camera::{ CameraCreateInfo, CameraObjectData};
 use rust_engine_3d::renderer::light::{ DirectionalLightCreateInfo, DirectionalLightData };
@@ -101,7 +103,7 @@ impl SceneManagerBase for SceneManager {
         self._main_camera.borrow_mut().set_aspect(width, height);
     }
 
-    fn open_scene_manager_data(&mut self, resources: &Resources) {
+    fn open_scene_data(&mut self, resources: &Resources) {
         let camera_create_info = CameraCreateInfo {
             window_width: self._window_width,
             window_height: self._window_height,
@@ -143,13 +145,13 @@ impl SceneManagerBase for SceneManager {
             ..Default::default()
         });
 
-        // let model_data0 = resources.get_model_data("sponza/sponza").clone();
-        // self.add_static_render_object("sponza", RenderObjectCreateInfo {
-        //     _model_data: Some(model_data0),
-        //     _position: Vector3::new(0.0, 0.0, 0.0),
-        //     _scale: Vector3::new(0.1, 0.1, 0.1),
-        //     ..Default::default()
-        // });
+        let model_data0 = resources.get_model_data("sponza/sponza").clone();
+        self.add_static_render_object("sponza", RenderObjectCreateInfo {
+            _model_data: Some(model_data0),
+            _position: Vector3::new(0.0, 0.0, 0.0),
+            _scale: Vector3::new(0.1, 0.1, 0.1),
+            ..Default::default()
+        });
 
         let sphere = resources.get_model_data("sphere").clone();
         self.add_static_render_object("sphere", RenderObjectCreateInfo {
@@ -159,22 +161,22 @@ impl SceneManagerBase for SceneManager {
             ..Default::default()
         });
 
-        // for i in 0..3 {
-        //     let model_data = resources.get_model_data("skeletal").clone();
-        //     let skeletal_actor = self.add_skeletal_render_object("skeletal", RenderObjectCreateInfo {
-        //         _model_data: Some(model_data),
-        //         _position: Vector3::new(i as f32, 1.0, 0.0),
-        //         _scale: Vector3::new(0.01, 0.01, 0.01),
-        //         ..Default::default()
-        //     });
-        //     skeletal_actor.borrow_mut()._animation_play_info.as_mut().unwrap().set_animation_play_info(&AnimationPlayArgs {
-        //         _speed: (1.0 + i as f32 * 0.1),
-        //         ..Default::default()
-        //     });
-        // }
+        for i in 0..3 {
+            let model_data = resources.get_model_data("skeletal").clone();
+            let skeletal_actor = self.add_skeletal_render_object("skeletal", RenderObjectCreateInfo {
+                _model_data: Some(model_data),
+                _position: Vector3::new(i as f32, 1.0, 0.0),
+                _scale: Vector3::new(0.01, 0.01, 0.01),
+                ..Default::default()
+            });
+            skeletal_actor.borrow_mut()._animation_play_info.as_mut().unwrap().set_animation_play_info(&AnimationPlayArgs {
+                _speed: (1.0 + i as f32 * 0.1),
+                ..Default::default()
+            });
+        }
     }
 
-    fn close_scene_manager_data(&mut self, device: &Device) {
+    fn close_scene_data(&mut self, device: &Device) {
         self._camera_object_map.clear();
         self._directional_light_object_map.clear();
         self._static_render_object_map.clear();
@@ -183,11 +185,15 @@ impl SceneManagerBase for SceneManager {
         self._static_shadow_render_elements.clear();
         self._skeletal_render_elements.clear();
         self._skeletal_shadow_render_elements.clear();
+    }
 
+    fn destroy_scene_manager_data(&mut self, device: &Device) {
         self.destroy_scene_graphics_data(device);
     }
 
-    fn update_scene_manager_data(&mut self, _elapsed_time: f64, delta_time: f64) {
+    fn update_scene_manager_data(&mut self, time_data: &TimeData, font_manager: &mut FontManager) {
+        let delta_time: f64 = time_data._delta_time;
+
         self._fft_ocean.borrow_mut().update(delta_time);
 
         let mut main_camera = self._main_camera.borrow_mut();
@@ -226,6 +232,12 @@ impl SceneManagerBase for SceneManager {
             &mut self._skeletal_render_elements,
             &mut self._skeletal_shadow_render_elements
         );
+
+        // debug text
+        font_manager.clear_logs();
+        font_manager.log(format!("{:.2}fps / {:.3}ms", time_data._average_fps, time_data._average_frame_time));
+        font_manager.log(format!("StaticMesh: {:?}, Shadow: {:?}", self._static_render_elements.len(), self._static_shadow_render_elements.len()));
+        font_manager.log(format!("SkeletalMesh: {:?}, Shadow: {:?}", self._skeletal_render_elements.len(), self._skeletal_shadow_render_elements.len()));
     }
 }
 

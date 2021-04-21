@@ -408,7 +408,7 @@ impl RendererBase for Renderer {
 
         // Render Text
         let render_text_info = RenderTextInfo {
-            _render_font_size: 20,
+            _render_font_size: 12,
             _initial_column: 0,
             _initial_row: 0,
             _render_text_offset: Vector2::new(10.0, 10.0),

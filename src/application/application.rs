@@ -130,7 +130,7 @@ impl ApplicationBase for Application {
         }
     }
 
-    fn terminate_applicateion(&mut self) {
+    fn terminate_application(&mut self) {
     }
 }
 
