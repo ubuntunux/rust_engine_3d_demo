@@ -7,7 +7,9 @@ git clone https://github.com/ubuntunux/rust_engine_3d_demo --recursive
 ```
 
 # update
+```
 git submodule update --recursive
+```
 
 # run on window or llinux
 cargo run --release
