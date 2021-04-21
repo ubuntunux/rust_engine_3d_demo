@@ -12,7 +12,9 @@ git submodule update --recursive
 ```
 
 # run on window or llinux
+```
 cargo run --release
+```
 
 # run on android
 - run first linux or windows cause generate resources.txt and shader cahces
