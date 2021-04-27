@@ -253,7 +253,7 @@ impl RendererData_Bloom {
         render_target_bloom0: &TextureData,
         render_target_bloom_temp0: &TextureData,
     ) {
-        let render_bloom_material_instance = resources.get_material_instance_data("render_bloom").borrow();
+        let render_bloom_material_instance = resources.get_material_instance_data("system/render_bloom").borrow();
         let pipeline_binding_data = render_bloom_material_instance.get_pipeline_binding_data("render_bloom/render_bloom_downsampling");
         let descriptor_binding_index: usize = 0;
         let layer = 0;
@@ -267,7 +267,7 @@ impl RendererData_Bloom {
             self._bloom_downsample_descriptor_sets.push(bloom_descriptor_set);
         }
 
-        let render_gaussian_blur_material_instance = resources.get_material_instance_data("render_gaussian_blur").borrow();
+        let render_gaussian_blur_material_instance = resources.get_material_instance_data("system/render_gaussian_blur").borrow();
         let pipeline_binding_data = render_gaussian_blur_material_instance.get_pipeline_binding_data("render_gaussian_blur/render_gaussian_blur");
         let descriptor_binding_index: usize = 0;
         for mip_level in 0..render_target_bloom0._image_mip_levels {
@@ -324,7 +324,7 @@ impl RendererData_TAA {
         taa_render_target: &TextureData,
         taa_resolve_texture: &TextureData,
     ) {
-        let render_copy_material_instance = resources.get_material_instance_data("render_copy").borrow();
+        let render_copy_material_instance = resources.get_material_instance_data("system/render_copy").borrow();
         let pipeline_binding_data = render_copy_material_instance.get_pipeline_binding_data("render_copy/render_copy");
         let descriptor_binding_index: usize = 0;
         let layer: u32 = 0;
@@ -354,7 +354,7 @@ impl RendererData_SSAO {
         render_target_ssao: &TextureData,
         render_target_ssao_temp: &TextureData,
     ) {
-        let render_gaussian_blur_material_instance = resources.get_material_instance_data("render_ssao_blur").borrow();
+        let render_gaussian_blur_material_instance = resources.get_material_instance_data("system/render_ssao_blur").borrow();
         let pipeline_binding_data = render_gaussian_blur_material_instance.get_pipeline_binding_data("render_ssao_blur/render_ssao_blur");
         let descriptor_binding_index: usize = 0;
         let layer: u32 = 0;
@@ -390,7 +390,7 @@ impl RendererData_HierachicalMinZ {
         resources: &Resources,
         render_target_hierachical_min_z: &TextureData,
     ) {
-        let generate_min_z_material_instance = resources.get_material_instance_data("generate_min_z").borrow();
+        let generate_min_z_material_instance = resources.get_material_instance_data("system/generate_min_z").borrow();
         let pipeline_binding_data = generate_min_z_material_instance.get_pipeline_binding_data("generate_min_z/generate_min_z");
         let layer: u32 = 0;
         let downsampling_count: u32 = render_target_hierachical_min_z._image_mip_levels - 1;
@@ -424,7 +424,7 @@ impl RendererData_SceneColorDownSampling {
         resources: &Resources,
         texture_scene_color: &TextureData,
     ) {
-        let downsampling_material_instance = resources.get_material_instance_data("downsampling").borrow();
+        let downsampling_material_instance = resources.get_material_instance_data("system/downsampling").borrow();
         let pipeline_binding_data = downsampling_material_instance.get_default_pipeline_binding_data();
         let layer: u32 = 0;
         let downsampling_count: u32 = texture_scene_color._image_mip_levels - 1;
@@ -456,7 +456,7 @@ impl RendererData_SSR {
         texture_ssr_resolved: &TextureData,
         texture_ssr_resolved_prev: &TextureData,
     ) {
-        let render_copy_material_instance = resources.get_material_instance_data("render_ssr_resolve").borrow();
+        let render_copy_material_instance = resources.get_material_instance_data("system/render_ssr_resolve").borrow();
         let pipeline_binding_data = render_copy_material_instance.get_default_pipeline_binding_data();
         let descriptor_binding_index: usize = 1;
         let layer: u32 = 0;
@@ -498,7 +498,7 @@ impl RendererData_CompositeGBuffer {
         texture_ssr_resolved: &TextureData,
         texture_ssr_resolved_prev: &TextureData,
     ) {
-        let render_copy_material_instance = resources.get_material_instance_data("composite_gbuffer").borrow();
+        let render_copy_material_instance = resources.get_material_instance_data("system/composite_gbuffer").borrow();
         let pipeline_binding_data = render_copy_material_instance.get_default_pipeline_binding_data();
         let descriptor_binding_index: usize = 12;
         self._descriptor_sets0 = utility::create_descriptor_sets(
@@ -525,7 +525,7 @@ impl RendererData_ClearRenderTargets {
         resources: &Resources,
         render_target_infos: &[(&TextureData, vk::ClearValue)],
     ) {
-        let material_instance = resources.get_material_instance_data("clear_render_target").borrow();
+        let material_instance = resources.get_material_instance_data("system/clear_render_target").borrow();
         for (render_target, clear_value) in render_target_infos.iter() {
             let is_depth_format = constants::DEPTH_FOMATS.contains(&render_target._image_format);
             let render_pass_pipeline_name = format!("clear_{:?}/clear", render_target._image_format);
@@ -596,13 +596,13 @@ impl RendererData_LightProbe {
         light_probe_atmosphere_inscatter: &TextureData,
         light_probe_view_constants: &[&ShaderBufferData],
     ) {
-        let material_instance = resources.get_material_instance_data("precomputed_atmosphere").borrow();
+        let material_instance = resources.get_material_instance_data("system/precomputed_atmosphere").borrow();
         let texture_white_image_info = DescriptorResourceInfo::DescriptorImageInfo(resources.get_texture_data("common/flat_white").borrow().get_default_image_info().clone());
         let render_atmosphere_pipeline_binding_data = material_instance.get_pipeline_binding_data("render_atmosphere/default");
         let composite_atmosphere_pipeline_binding_data = material_instance.get_pipeline_binding_data("composite_atmosphere/default");
-        let downsampling_material_instance = resources.get_material_instance_data("downsampling").borrow();
+        let downsampling_material_instance = resources.get_material_instance_data("system/downsampling").borrow();
         let downsampling_pipeline_binding_data = downsampling_material_instance.get_default_pipeline_binding_data();
-        let copy_cube_map_material_instance = resources.get_material_instance_data("copy_cube_map").borrow();
+        let copy_cube_map_material_instance = resources.get_material_instance_data("system/copy_cube_map").borrow();
         let copy_cube_map_pipeline_binding_data = copy_cube_map_material_instance.get_pipeline_binding_data("copy_cube_map/copy");
         let blend_cube_map_pipeline_binding_data = copy_cube_map_material_instance.get_pipeline_binding_data("copy_cube_map/blend");
 

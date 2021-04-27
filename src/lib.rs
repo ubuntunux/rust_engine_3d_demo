@@ -1,9 +1,10 @@
-pub mod application;
 pub mod application_constants;
-pub mod render_pass_create_info;
+pub mod application;
+pub mod render_pass;
 pub mod renderer;
+pub mod resource;
 
-use crate::application::application::run_application;
+use crate::application::project_application::run_application;
 
 #[cfg_attr(target_os = "android", ndk_glue::main(backtrace = "on"))]
 pub fn main() {

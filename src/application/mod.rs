@@ -1,2 +1,2 @@
-pub mod application;
-pub mod scene_manager;
+pub mod project_application;
+pub mod project_scene_manager;
