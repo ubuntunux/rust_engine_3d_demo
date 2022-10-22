@@ -1,0 +1,9 @@
+{"_bullet_type":"Beam",
+"_shield_damage":1.0,
+"_hull_damage":1.0,
+"_bullet_speed":100.0,
+"_bullet_range":100.0,
+"_bullet_life_time":10.0,
+"_bullet_destroy_effects":[],
+"_bullet_destroy_sound_bank":"",
+"_model_data_name":""}

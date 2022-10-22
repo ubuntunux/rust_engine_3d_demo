@@ -1,0 +1,13 @@
+{ "pipelines": [ {"render_pass": "render_pass_skeletal_gbuffer", "pipeline": "render_ship"}
+               , {"render_pass": "render_pass_skeletal_forward", "pipeline": "render_ship"}
+               , {"render_pass": "render_pass_skeletal_shadow", "pipeline": "render_ship"}
+               ]
+, "material_parameters": { "textureBase": "common/default"
+                         , "textureMaterial": "common/default_m"
+                         , "textureNormal": "common/default_n"
+                         , "transmittance_texture": "precomputed_atmosphere/transmittance"
+                         , "irradiance_texture": "precomputed_atmosphere/irradiance"
+                         , "scattering_texture": "precomputed_atmosphere/scattering"
+                         }
+}
+

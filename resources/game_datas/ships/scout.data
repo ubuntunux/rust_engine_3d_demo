@@ -1,0 +1,15 @@
+{"_ship_type":"Scout",
+"_model_data_name":"ships/trident",
+"_hull_armor":0.0,
+"_shield_armor":0.0,
+"_max_hull":100.0,
+"_max_shields":10.0,
+"_weapon_solts":[
+{"_position":[2.0,0.0,1.0],
+"_rotation":[0.0,0.0,0.0],
+"_scale":[1.0,1.0,1.0]},
+{"_position":[-2.0,0.0,1.0],
+"_rotation":[0.0,0.0,0.0],
+"_scale":[1.0,1.0,1.0]}
+],
+"_controller_data_name":"light_ship_controller"}

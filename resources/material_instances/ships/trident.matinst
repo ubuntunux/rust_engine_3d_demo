@@ -1,0 +1,6 @@
+{"material_name": "render_ship",
+ "material_parameters": { "textureBase": "ships/trident_d"
+                        , "textureMaterial": "ships/trident_m"
+                        , "textureNormal": "ships/trident_n"
+                        }
+}

@@ -1,0 +1,2 @@
+{"material_name": "common/render_static_object",
+ "material_parameters": {"textureBase": "stages/default_stage_heightmap", "textureMaterial": "common/flat_red", "textureNormal": "common/default_n"}}
