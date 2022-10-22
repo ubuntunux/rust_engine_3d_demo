@@ -1,6 +1,6 @@
-{ "pipelines": [ {"render_pass": "render_pass_skeletal_gbuffer", "pipeline": "render_ship"}
-               , {"render_pass": "render_pass_skeletal_forward", "pipeline": "render_ship"}
-               , {"render_pass": "render_pass_skeletal_shadow", "pipeline": "render_ship"}
+{ "pipelines": [ {"render_pass": "render_pass_skeletal_gbuffer", "pipeline": "render_test"}
+               , {"render_pass": "render_pass_skeletal_forward", "pipeline": "render_test"}
+               , {"render_pass": "render_pass_skeletal_shadow", "pipeline": "render_test"}
                ]
 , "material_parameters": { "textureBase": "common/default"
                          , "textureMaterial": "common/default_m"

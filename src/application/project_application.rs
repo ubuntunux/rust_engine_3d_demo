@@ -72,8 +72,7 @@ impl ProjectApplicationBase for ProjectApplication {
         }
 
         if self._is_game_mode {
-            // game mode
-            self.get_game_client_mut().update_event();
+            self.get_game_client_mut().update_game_event();
         } else {
             // editor mode
             let engine_application = self.get_engine_application();
