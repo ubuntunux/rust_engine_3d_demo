@@ -55,6 +55,7 @@ resources/engine_resources/externals/textures/common/default.png
 resources/engine_resources/externals/textures/common/water_caustic_13.png
 resources/engine_resources/externals/textures/common/water_caustic_09.png
 resources/engine_resources/externals/textures/common/water_caustic_12.png
+resources/engine_resources/externals/textures/common/flat_yellow.png
 resources/engine_resources/externals/textures/common/flat_black.png
 resources/engine_resources/externals/textures/common/mouse_cursor.png
 resources/engine_resources/externals/textures/common/default_cube.cube
@@ -70,6 +71,7 @@ resources/engine_resources/externals/textures/common/default_n.png
 resources/engine_resources/externals/textures/common/water_caustic.3d
 resources/engine_resources/externals/textures/common/water_caustic_08.png
 resources/engine_resources/externals/textures/common/water_caustic_15.png
+resources/engine_resources/externals/textures/common/flat_magenta.png
 resources/engine_resources/externals/textures/common/water_caustic_00.png
 resources/engine_resources/externals/textures/common/water_caustic_14.png
 resources/engine_resources/externals/textures/common/flat_blue.png
@@ -79,6 +81,7 @@ resources/engine_resources/externals/textures/common/default_cube_front.jpg
 resources/engine_resources/externals/textures/common/water_caustic_04.png
 resources/engine_resources/externals/textures/common/flat_none.png
 resources/engine_resources/externals/textures/common/fresnel_lut.png
+resources/engine_resources/externals/textures/common/flat_cyan.png
 resources/engine_resources/externals/textures/common/water_caustic_06.png
 resources/engine_resources/externals/textures/common/water_foam.jpg
 resources/engine_resources/externals/textures/fonts/NanumGothic_Basic_Latin.png
