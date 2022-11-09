@@ -19,14 +19,14 @@
 "_shadow_dimensions":[200.0,200.0,-1000.0,1000.0],
 "_shadow_update_distance":10.0}},
 "_effects":{
-    "effect_test":{"_effect_data_name":"effect_test","_effect_position":[0.0,15.0,0.0],"_effect_rotation":[0.0,0.0,0.0],"_effect_scale":[1.0,1.0,1.0]}
+    "effect_test":{"_effect_data_name":"effect_test","_effect_position":[-10.0,15.0,0.0],"_effect_rotation":[0.0,0.0,0.0],"_effect_scale":[1.0,1.0,1.0]}
 },
 "_static_objects":{
     "sponza":{"_model_data_name":"sponza/sponza","_position":[0.0,5.0,0.0],"_rotation":[0.0,0.0,0.0],"_scale":[1.0,1.0,1.0]},
-    "suzan":{"_model_data_name":"suzan","_position":[20.0,15.0,0.0],"_rotation":[0.0,90.0,0.0],"_scale":[3.0,3.0,3.0]},
-    "sphere":{"_model_data_name":"sphere","_position":[10.0,15.0,0.0],"_rotation":[0.0,0.0,0.0],"_scale":[3.0,3.0,3.0]}
+    "suzan":{"_model_data_name":"suzan","_position":[20.0,15.0,0.0],"_rotation":[0.0,1.5707963267948966,0.0],"_scale":[3.0,3.0,3.0]},
+    "sphere":{"_model_data_name":"sphere","_position":[35.0,15.0,0.0],"_rotation":[0.0,0.0,0.0],"_scale":[3.0,3.0,3.0]}
 },
 "_skeletal_objects":{
-    "skeletal0": {"_model_data_name":"skeletal", "_position":[0.0,12.0,0.0], "_rotation":[0.0,90.0,0.0], "_scale":[0.1,0.1,0.1]}
+    "skeletal0": {"_model_data_name":"skeletal", "_position":[5.0,12.0,0.0], "_rotation":[0.0,-1.5707963267948966,0.0], "_scale":[0.1,0.1,0.1]}
 }
 }
