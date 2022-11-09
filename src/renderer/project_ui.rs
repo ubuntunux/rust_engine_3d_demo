@@ -1,13 +1,38 @@
-use rust_engine_3d::renderer::ui::{ProjectUIManagerBase, UIManager, UIWidgetTypes, Widget, UILayoutType, Orientation, HorizontalAlign, VerticalAlign, WidgetDefault};
+use std::os::raw::c_void;
+use std::rc::Rc;
+use nalgebra::Vector2;
+use rust_engine_3d::renderer::ui::{ProjectUIManagerBase, UIManager, UIWidgetTypes, Widget, WidgetDefault, CallbackTouchEvent, UIComponentInstance, HorizontalAlign, VerticalAlign};
 use rust_engine_3d::renderer::renderer_context::RendererContext;
 use rust_engine_3d::resource::resource::EngineResources;
 use rust_engine_3d::vulkan_context::vulkan_context::{ get_color32 };
 use rust_engine_3d::utilities::system::{ptr_as_mut};
 
-
+// Declaration
 pub struct ProjectUIManager {
     pub _ui_manager: *const UIManager,
     pub _root_widget: *const dyn Widget,
+    pub _game_ui_layout: *const dyn Widget,
+    pub _ui_switch: Option<UISwitch>
+}
+
+pub struct UISwitch {
+    pub _ui_switch_widget: Rc<dyn Widget>
+}
+
+// Implemetation
+impl ProjectUIManager {
+    pub fn create_project_ui_manager() -> Box<ProjectUIManager> {
+        Box::new(ProjectUIManager {
+            _ui_manager: std::ptr::null(),
+            _root_widget: std::ptr::null() as *const WidgetDefault,
+            _game_ui_layout: std::ptr::null() as *const WidgetDefault,
+            _ui_switch: None
+        })
+    }
+
+    pub fn game_ui_layout(&self) -> *const dyn Widget {
+        self._game_ui_layout
+    }
 }
 
 impl ProjectUIManagerBase for ProjectUIManager {
@@ -33,125 +58,57 @@ impl ProjectUIManagerBase for ProjectUIManager {
     }
 
     fn build_ui(&mut self, _renderer_context: &RendererContext, engine_resources: &EngineResources) {
-        let root = self.get_root_widget_mut();
-        let btn0 = UIManager::create_widget("btn0", UIWidgetTypes::Default);
-        let ui_component = ptr_as_mut(btn0.as_ref()).get_ui_component_mut();
-        ui_component.set_pos(25.0,255.0);
-        ui_component.set_size(200.0, 100.0);
-        ui_component.set_color(get_color32(255, 255, 255, 255));
-        ui_component.set_font_color(get_color32(0, 0, 0, 255));
-        ui_component.set_border_color(get_color32(255, 0, 0, 255));
-        ui_component.set_margine(5.0);
-        ui_component.set_round(10.0);
-        ui_component.set_border(5.0);
-        ui_component.set_dragable(true);
-        ui_component.set_touchable(true);
-        ui_component.set_expandable(true);
-        ui_component.set_resizable(true);
-        ui_component.set_text("btn0\nbtn0 Child Test");
-        ui_component.set_material_instance(&engine_resources.get_material_instance_data("ui/render_ui_test"));
-        root.add_widget(&btn0);
+        let game_ui_layout = UIManager::create_widget("game ui layout", UIWidgetTypes::Default);
+        let game_ui_layout_mut = ptr_as_mut(game_ui_layout.as_ref());
+        let ui_component = game_ui_layout_mut.get_ui_component_mut();
+        ui_component.set_size_hint_x(Some(1.0));
+        ui_component.set_size_hint_y(Some(1.0));
+        ui_component.set_renderable(false);
 
-        let btn0_0 = UIManager::create_widget("btn0_0", UIWidgetTypes::Default);
-        let ui_component = ptr_as_mut(btn0_0.as_ref()).get_ui_component_mut();
-        ui_component.set_pos(0.0, 5.0);
-        ui_component.set_size(100.0, 50.0);
-        ui_component.set_color(get_color32(255, 128, 128, 255));
-        ui_component.set_font_color(get_color32(255, 255, 255, 255));
-        ui_component.set_border_color(get_color32(0, 0, 0, 255));
-        ui_component.set_margine(5.0);
-        ui_component.set_round(10.0);
-        ui_component.set_border(5.0);
-        ui_component.set_dragable(true);
-        ui_component.set_touchable(true);
-        ui_component.set_expandable(true);
-        ui_component.set_resizable(true);
-        ui_component.set_text("btn0_0\nbtn0_0 Test");
-        ptr_as_mut(btn0.as_ref()).add_widget(&btn0_0);
+        self._game_ui_layout = game_ui_layout.as_ref();
 
-        let btn0_0_0 = UIManager::create_widget("btn0_0_0", UIWidgetTypes::Default);
-        let ui_component = ptr_as_mut(btn0_0_0.as_ref()).get_ui_component_mut();
-        ui_component.set_pos(0.0, 5.0);
-        ui_component.set_size(200.0, 100.0);
-        ui_component.set_color(get_color32(128, 128, 255, 255));
-        ui_component.set_font_color(get_color32(0, 0, 0, 255));
-        ui_component.set_border_color(get_color32(0, 0, 0, 128));
-        ui_component.set_margine(5.0);
-        ui_component.set_round(10.0);
-        ui_component.set_border(5.0);
-        ui_component.set_dragable(true);
-        ui_component.set_touchable(true);
-        ui_component.set_expandable(true);
-        ui_component.set_resizable(true);
-        ui_component.set_text("btn0_0_0\nbtn0_0_0 Test");
-        ptr_as_mut(btn0_0.as_ref()).add_widget(&btn0_0_0);
+        let root_widget_mut = ptr_as_mut(self._root_widget);
+        root_widget_mut.add_widget(&game_ui_layout);
 
-        //
-        let btn0_1 = UIManager::create_widget("btn0_1", UIWidgetTypes::Default);
-        let ui_component = ptr_as_mut(btn0_1.as_ref()).get_ui_component_mut();
-        ui_component.set_layout_type(UILayoutType::BoxLayout);
-        ui_component.set_layout_orientation(Orientation::VERTICAL);
-        ui_component.set_halign(HorizontalAlign::RIGHT);
-        ui_component.set_valign(VerticalAlign::BOTTOM);
-        ui_component.set_pos(100.0, 50.0);
-        ui_component.set_size(100.0, 100.0);
-        ui_component.set_color(get_color32(255, 128, 128, 255));
-        ui_component.set_font_color(get_color32(255, 255, 255, 255));
-        ui_component.set_border_color(get_color32(0, 0, 0, 255));
-        ui_component.set_margine(5.0);
-        ui_component.set_round(10.0);
-        ui_component.set_border(5.0);
-        ui_component.set_dragable(true);
-        ui_component.set_touchable(true);
-        ui_component.set_expandable(true);
-        ui_component.set_resizable(true);
-        ui_component.set_text("btn0_1\nbtn0_1 Test");
-        ptr_as_mut(btn0.as_ref()).add_widget(&btn0_1);
-
-        let btn0_1_0 = UIManager::create_widget("btn0_1_0", UIWidgetTypes::Default);
-        let ui_component = ptr_as_mut(btn0_1_0.as_ref()).get_ui_component_mut();
-        ui_component.set_pos(0.0, 5.0);
-        ui_component.set_size(50.0, 75.0);
-        ui_component.set_color(get_color32(255, 128, 255, 255));
-        ui_component.set_font_color(get_color32(0, 0, 0, 255));
-        ui_component.set_border_color(get_color32(0, 0, 0, 128));
-        ui_component.set_margine(5.0);
-        ui_component.set_round(10.0);
-        ui_component.set_border(5.0);
-        ui_component.set_dragable(true);
-        ui_component.set_touchable(true);
-        ui_component.set_expandable(true);
-        ui_component.set_resizable(true);
-        ui_component.set_text("btn0_1_0\nbtn0_1_0 Test");
-        ptr_as_mut(btn0_1.as_ref()).add_widget(&btn0_1_0);
-
-        let btn0_1_1 = UIManager::create_widget("btn0_1_1", UIWidgetTypes::Default);
-        let ui_component = ptr_as_mut(btn0_1_1.as_ref()).get_ui_component_mut();
-        ui_component.set_halign(HorizontalAlign::RIGHT);
-        ui_component.set_valign(VerticalAlign::BOTTOM);
-        ui_component.set_pos(0.0, 5.0);
-        ui_component.set_size(150.0, 50.0);
-        ui_component.set_color(get_color32(128, 128, 255, 255));
-        ui_component.set_font_color(get_color32(0, 0, 0, 255));
-        ui_component.set_border_color(get_color32(0, 0, 0, 128));
-        ui_component.set_margine(5.0);
-        ui_component.set_margine_top(40.0);
-        ui_component.set_padding_top(40.0);
-        ui_component.set_round(10.0);
-        ui_component.set_border(5.0);
-        ui_component.set_dragable(true);
-        ui_component.set_touchable(true);
-        ui_component.set_resizable(true);
-        ui_component.set_text("btn0_1_1\nbtn0_1_1 Test");
-        ptr_as_mut(btn0_1.as_ref()).add_widget(&btn0_1_1);
+        self._ui_switch = Some(UISwitch::create_ui_switch(engine_resources, root_widget_mut, game_ui_layout_mut));
     }
 }
 
-impl ProjectUIManager {
-    pub fn create_project_ui_manager() -> Box<ProjectUIManager> {
-        Box::new(ProjectUIManager {
-            _ui_manager: std::ptr::null(),
-            _root_widget: std::ptr::null() as *const WidgetDefault,
-        })
+impl UISwitch {
+    pub fn create_ui_switch(_engine_resources: &EngineResources, root_widget: &mut dyn Widget, game_ui_widget: &dyn Widget) -> UISwitch {
+        let ui_switch_widget = UIManager::create_widget("ui_switch", UIWidgetTypes::Default);
+        let ui_component = ptr_as_mut(ui_switch_widget.as_ref()).get_ui_component_mut();
+        ui_component.set_text("UI On/Off");
+        ui_component.set_pos_hint_x(Some(0.5));
+        ui_component.set_pos_hint_y(Some(0.0));
+        ui_component.set_size(150.0, 50.0);
+        ui_component.set_font_size(20.0);
+        ui_component.set_color(get_color32(128, 128, 255, 128));
+        ui_component.set_font_color(get_color32(255, 255, 255, 255));
+        ui_component.set_border_color(get_color32(0, 0, 0, 128));
+        ui_component.set_halign(HorizontalAlign::CENTER);
+        ui_component.set_valign(VerticalAlign::CENTER);
+        ui_component.set_margine(5.0);
+        ui_component.set_round(10.0);
+        ui_component.set_border(2.0);
+        ui_component.set_touchable(true);
+        //ui_component.set_material_instance(&engine_resources.get_material_instance_data("ui/render_ui_test"));
+
+        static TOUCH_DOWN: CallbackTouchEvent = UISwitch::touch_down;
+        ui_component.set_callback_touch_down(&TOUCH_DOWN);
+        ui_component.set_user_data(game_ui_widget.get_ui_component() as *const UIComponentInstance as *const c_void);
+        root_widget.add_widget(&ui_switch_widget);
+
+        let ui_switch = UISwitch {
+            _ui_switch_widget: ui_switch_widget,
+        };
+
+        ui_switch
+    }
+
+    pub fn touch_down(ui_component: &mut UIComponentInstance, _touched_pos: &Vector2<f32>, _touched_pos_delta: &Vector2<f32>) -> bool {
+        let game_ui_component = ptr_as_mut(ui_component.get_user_data() as *const UIComponentInstance);
+        game_ui_component.set_visible(!game_ui_component.get_visible());
+        true
     }
 }

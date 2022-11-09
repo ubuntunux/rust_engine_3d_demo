@@ -1,7 +1,7 @@
 use nalgebra::{ Vector2 };
 
 use rust_engine_3d::application::scene_manager::ProjectSceneManagerBase;
-use rust_engine_3d::renderer::ui::{ProjectUIManagerBase, Widget, WidgetDefault};
+use rust_engine_3d::renderer::ui::{Widget, WidgetDefault};
 use rust_engine_3d::utilities::system::{ptr_as_ref, ptr_as_mut};
 use crate::game_module::game_client::GameClient;
 use crate::game_module::ui_widgets::hud::{CrossHair, TargetHud, PlayerHud, SelectionArea};
@@ -37,14 +37,14 @@ impl GameUIManager {
         self._project_ui_manager = game_client.get_project_ui_manager();
 
         let project_resources = game_client.get_project_resources();
-        let root_widget = game_client.get_project_ui_manager().get_root_widget_mut();
+        let game_ui_layout_mut = ptr_as_mut(game_client.get_project_ui_manager().game_ui_layout());
         let window_size = &game_client.get_project_application().get_engine_application()._window_size;
         let window_center = Vector2::<f32>::new(window_size.x as f32 * 0.5, window_size.y as f32 * 0.5,);
 
-        self._crosshair = Some(CrossHair::create_crosshair(project_resources, root_widget, &window_center));
-        self._target_hud = Some(TargetHud::create_target_hud(root_widget, &window_center));
-        self._player_hud = Some(PlayerHud::create_player_hud(root_widget, &Vector2::new(window_size.x as f32 - 200.0, window_center.y as f32)));
-        self._selection_area = Some(SelectionArea::create_selection_area(root_widget, window_size));
+        self._crosshair = Some(CrossHair::create_crosshair(project_resources, game_ui_layout_mut, &window_center));
+        self._target_hud = Some(TargetHud::create_target_hud(game_ui_layout_mut, &window_center));
+        self._player_hud = Some(PlayerHud::create_player_hud(game_ui_layout_mut, &Vector2::new(window_size.x as f32 - 200.0, window_center.y as f32)));
+        self._selection_area = Some(SelectionArea::create_selection_area(game_ui_layout_mut, window_size));
     }
 
     pub fn destroy_game_ui_manager(&mut self) {

@@ -62,6 +62,7 @@ resources/engine_resources/externals/textures/common/default_m.png
 resources/engine_resources/externals/textures/common/default_cube_back.jpg
 resources/engine_resources/externals/textures/common/water_caustic_10.png
 resources/engine_resources/externals/textures/common/ibl_brdf_lut.png
+resources/engine_resources/externals/textures/common/default_emissive.png
 resources/engine_resources/externals/textures/common/default_cube_bottom.jpg
 resources/engine_resources/externals/textures/common/noise.png
 resources/engine_resources/externals/textures/common/water_caustic_01.png
@@ -90,6 +91,7 @@ resources/engine_resources/externals/textures/fonts/NanumBarunGothicBold_Basic_L
 resources/engine_resources/externals/meshes/skeletal.dae
 resources/engine_resources/externals/meshes/sphere.obj
 resources/engine_resources/externals/meshes/axis_gizmo.obj
+resources/engine_resources/externals/meshes/skeletal.blend
 resources/engine_resources/externals/meshes/suzan.obj
 resources/engine_resources/externals/fonts/NanumBarunGothic.ttf
 resources/engine_resources/externals/fonts/NanumGothic.ttf
@@ -303,7 +305,10 @@ resources/engine_resources/material_instances/common/render_ssao.matinst
 resources/engine_resources/material_instances/common/render_color.matinst
 resources/engine_resources/material_instances/common/generate_min_z.matinst
 resources/engine_resources/material_instances/common/render_motion_blur.matinst
+resources/engine_resources/material_instances/color_blue.matinst
+resources/engine_resources/material_instances/color_green.matinst
 resources/engine_resources/material_instances/skeletal.matinst
+resources/engine_resources/material_instances/color_red.matinst
 resources/engine_resources/material_instances/precomputed_atmosphere/precomputed_atmosphere.matinst
 resources/engine_resources/material_instances/default.matinst
 resources/engine_resources/material_instances/fft_ocean/render_fft_ocean.matinst
