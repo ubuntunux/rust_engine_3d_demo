@@ -29,10 +29,7 @@ now use ndk-glue 0.2 but ndk-glue 0.3 for audio.
 problem is ndk-glue 0.3 is not compatibility with winit make freeze.
 
 ## Features
-* Features : https://www.youtube.com/watch?v=Lpuxi2O5fiA
-
-* pybullet example : https://github.com/ubuntunux/PyBullet3D
-
+* Features : https://www.youtube.com/watch?v=lAMA23NmRTI
 * Import
     - Mesh 
         - [x] .obj, .dae ( colada )
