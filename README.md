@@ -2,6 +2,7 @@
 * An open source Rust Vulkan renderer using the ash API.
 * RustEngine3D: https://github.com/ubuntunux/RustEngine3D
 * ash: https://github.com/ash-rs/ash
+* Video: https://www.youtube.com/watch?v=lAMA23NmRTI
 
 # install
 ```
