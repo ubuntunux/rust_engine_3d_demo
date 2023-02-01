@@ -248,7 +248,7 @@ pub fn run_project_application() {
         constants::VULKAN_API_VERSION = vulkan_api_version;
         constants::DEBUG_MESSAGE_LEVEL = vk::DebugUtilsMessageSeverityFlagsEXT::WARNING;
         if enable_validation_layer {
-            constants::REQUIRED_INSTANCE_LAYERS = vec!["VK_LAYER_MESA_device_select".to_string()];
+            constants::REQUIRED_INSTANCE_LAYERS = vec!["VK_LAYER_KHRONOS_validation".to_string()];
             //constants::REQUIRED_INSTANCE_LAYERS = vec!["VK_LAYER_LUNARG_standard_validation".to_string()];
         }
         constants::REQUIRED_DEVICE_EXTENSIONS = vec![
