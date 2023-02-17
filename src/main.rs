@@ -4,7 +4,6 @@ extern crate nalgebra;
 extern crate winit;
 extern crate log;
 extern crate cgmath;
-extern crate rust_engine_3d_demo;
 
 pub mod application;
 pub mod application_constants;

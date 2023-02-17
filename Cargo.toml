@@ -36,8 +36,12 @@ raw-window-handle = "0.4.3"
 #cpal = "0.13.3"
 #ndk-glue = "0.3"
 
-[lib]
-crate-type = ["lib", "cdylib"]
+[[bin]]
+name = "rust_engine_3d_demo"
+
+#[lib]
+#name = "rust_engine_3d_demo_lib"
+#crate-type = ["lib", "cdylib"]
 
 [target.'cfg(target_os = "android")'.dependencies]
 ndk-glue = "0.2"
