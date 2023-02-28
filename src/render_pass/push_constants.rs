@@ -5,6 +5,7 @@ use serde_json;
 use rust_engine_3d::renderer::push_constants::{PushConstantParameter, PushConstant, PushConstantName};
 use rust_engine_3d::utilities::json::convert_json_value_to_push_constant_parameter;
 
+#[repr(C)]
 #[allow(non_camel_case_types)]
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(default)]
