@@ -115,7 +115,7 @@ impl ProjectSceneManager {
             DirectionalLightData::create_light_data(
                 &String::from("capture_height_map"),
                 &DirectionalLightCreateInfo {
-                    _rotation: Vector3::new(std::f32::consts::PI * -0.5, 0.0, 0.0),
+                    _rotation: Vector3::new(std::f32::consts::PI * 0.5, 0.0, 0.0),
                     _shadow_dimensions: Vector4::new(
                         constants::CAPTURE_HEIGHT_MAP_DISTANCE,
                         constants::CAPTURE_HEIGHT_MAP_DISTANCE,
@@ -241,10 +241,9 @@ impl ProjectSceneManager {
             Vector3::new(0.0, 0.0, 0.0),
             Vector3::new(0.0, pi, 0.0)
         ];
-        let inverse_front = Vector3::new(1.0, 1.0, -1.0);
         for i in 0..constants::CUBE_LAYER_COUNT {
             self._light_probe_cameras[i].borrow_mut()._transform_object.set_rotation(&rotations[i]);
-            self._light_probe_cameras[i].borrow_mut()._transform_object.set_scale(&inverse_front);
+            self._light_probe_cameras[i].borrow_mut()._transform_object.set_scale(&Vector3::new(1.0, 1.0, 1.0));
             self._light_probe_cameras[i].borrow_mut().update_camera_object_data();
         }
     }
@@ -386,7 +385,7 @@ impl ProjectSceneManager {
             }
         );
 
-        let pitch: f32 = -std::f32::consts::PI * 0.47;
+        let pitch: f32 = std::f32::consts::PI * 0.47;
         scene_data_create_info._directional_lights.insert(
             String::from("main_light"),
             DirectionalLightCreateInfo {

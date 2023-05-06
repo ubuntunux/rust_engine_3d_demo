@@ -119,7 +119,7 @@ impl ProjectApplicationBase for ProjectApplication {
             let camera_move_speed_multiplier = if modifier_keys_shift { 2.0 } else { 1.0 };
             let move_speed: f32 = application_constants::CAMERA_MOVE_SPEED * camera_move_speed_multiplier * delta_time as f32;
             let pan_speed = application_constants::CAMERA_PAN_SPEED * camera_move_speed_multiplier;
-            let _rotation_speed = application_constants::CAMERA_ROTATION_SPEED;
+            let rotation_speed = application_constants::CAMERA_ROTATION_SPEED;
 
             if released_key_left_bracket {
                 self.get_renderer_data_mut().prev_debug_render_target();
@@ -133,11 +133,6 @@ impl ProjectApplicationBase for ProjectApplication {
                 self.get_renderer_data_mut().next_debug_render_target_miplevel();
             }
 
-            #[cfg(target_os = "android")]
-                let rotation_speed = 0.02 * delta_time as f32;
-            #[cfg(not(target_os = "android"))]
-                let rotation_speed = delta_time as f32;
-
             if pressed_key_comma {
                 main_light._transform_object.rotation_pitch(rotation_speed);
             } else if pressed_key_period {
@@ -145,33 +140,33 @@ impl ProjectApplicationBase for ProjectApplication {
             }
 
             if btn_left && btn_right {
-                main_camera._transform_object.move_left(-pan_speed * mouse_delta_x as f32);
-                main_camera._transform_object.move_up(pan_speed * mouse_delta_y as f32);
+                main_camera._transform_object.move_right(pan_speed * mouse_delta_x as f32);
+                main_camera._transform_object.move_up(-pan_speed * mouse_delta_y as f32);
             }
             else if btn_right {
-                main_camera._transform_object.rotation_pitch(-rotation_speed * mouse_delta_y as f32);
-                main_camera._transform_object.rotation_yaw(-rotation_speed * mouse_delta_x as f32);
+                main_camera._transform_object.rotation_pitch(rotation_speed * mouse_delta_y as f32);
+                main_camera._transform_object.rotation_yaw(rotation_speed * mouse_delta_x as f32);
             }
 
             if pressed_key_z {
-                main_camera._transform_object.rotation_roll(-rotation_speed * delta_time as f32);
+                main_camera._transform_object.rotation_roll(-rotation_speed * delta_time as f32 * 100.0);
             }
             else if pressed_key_c {
-                main_camera._transform_object.rotation_roll(rotation_speed * delta_time as f32);
+                main_camera._transform_object.rotation_roll(rotation_speed * delta_time as f32 * 100.0);
             }
 
             if pressed_key_w {
-                main_camera._transform_object.move_front(-move_speed);
+                main_camera._transform_object.move_front(move_speed);
             }
             else if pressed_key_s {
-                main_camera._transform_object.move_front(move_speed);
+                main_camera._transform_object.move_front(-move_speed);
             }
 
             if pressed_key_a {
-                main_camera._transform_object.move_left(-move_speed);
+                main_camera._transform_object.move_right(-move_speed);
             }
             else if pressed_key_d {
-                main_camera._transform_object.move_left(move_speed);
+                main_camera._transform_object.move_right(move_speed);
             }
 
             if pressed_key_q {

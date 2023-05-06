@@ -65,7 +65,7 @@ impl GameController {
         front_xz.y = 0.0;
         front_xz.try_normalize_mut(0.0);
 
-        let mut left_xz: Vector3<f32> = main_camera._transform_object.get_left().clone_owned();
+        let mut left_xz: Vector3<f32> = main_camera._transform_object.get_right().clone_owned();
         left_xz.y = 0.0;
         left_xz.try_normalize_mut(0.0);
 
