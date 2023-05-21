@@ -104,6 +104,7 @@ resources/engine_resources/shader_caches/common/render_taa.frag.spirv
 resources/engine_resources/shader_caches/common/render_object_RenderMode2_RenderObjectType1.frag.spirv
 resources/engine_resources/shader_caches/common/render_motion_blur.frag.spirv
 resources/engine_resources/shader_caches/common/render_object_RenderMode0_RenderObjectType0.vert.spirv
+resources/engine_resources/shader_caches/common/generate_max_z.comp.spirv
 resources/engine_resources/shader_caches/common/render_object_RenderMode3_RenderObjectType1.frag.spirv
 resources/engine_resources/shader_caches/common/render_object_RenderMode0_RenderObjectType1.frag.spirv
 resources/engine_resources/shader_caches/common/render_object_RenderMode2_RenderObjectType0.vert.spirv
@@ -240,9 +241,9 @@ resources/engine_resources/material_instances/common/render_ssao.matinst
 resources/engine_resources/material_instances/common/render_bloom.matinst
 resources/engine_resources/material_instances/common/render_color.matinst
 resources/engine_resources/material_instances/common/render_debug.matinst
+resources/engine_resources/material_instances/common/generate_max_z.matinst
 resources/engine_resources/material_instances/common/composite_gbuffer.matinst
 resources/engine_resources/material_instances/common/render_final.matinst
-resources/engine_resources/material_instances/common/generate_min_z.matinst
 resources/engine_resources/material_instances/common/render_ssr.matinst
 resources/engine_resources/material_instances/common/clear_render_target.matinst
 resources/engine_resources/material_instances/common/render_gaussian_blur.matinst
@@ -300,7 +301,6 @@ resources/engine_resources/shaders/common/light_shaft.frag
 resources/engine_resources/shaders/common/blending.glsl
 resources/engine_resources/shaders/common/utility.glsl
 resources/engine_resources/shaders/common/convolve_environment.frag
-resources/engine_resources/shaders/common/generate_min_z.comp
 resources/engine_resources/shaders/common/render_color.frag
 resources/engine_resources/shaders/common/composite_gbuffer.frag
 resources/engine_resources/shaders/common/default.frag
@@ -309,6 +309,7 @@ resources/engine_resources/shaders/common/render_object.frag
 resources/engine_resources/shaders/common/render_bloom_highlight.frag
 resources/engine_resources/shaders/common/downsampling.comp
 resources/engine_resources/shaders/common/blur_simple.frag
+resources/engine_resources/shaders/common/generate_max_z.comp
 resources/engine_resources/shaders/common/render_heightmap.frag
 resources/engine_resources/shaders/common/render_ssao.frag
 resources/engine_resources/shaders/common/render_gaussian_blur.frag
@@ -383,9 +384,9 @@ resources/engine_resources/models/suzan.model
 resources/engine_resources/models/sphere.model
 resources/engine_resources/models/quad.model
 resources/engine_resources/models/skeletal.model
+resources/engine_resources/materials/common/generate_max_z.mat
 resources/engine_resources/materials/common/copy_cube_map.mat
 resources/engine_resources/materials/common/clear_framebuffer.mat
-resources/engine_resources/materials/common/generate_min_z.mat
 resources/engine_resources/materials/common/render_taa.mat
 resources/engine_resources/materials/common/render_taa_simple.mat
 resources/engine_resources/materials/common/render_debug.mat
