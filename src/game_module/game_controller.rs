@@ -73,11 +73,11 @@ impl GameController {
         let camera_move_speed_multiplier = if modifier_keys_shift { 2.0 } else { 1.0 };
         let camera_move_speed: f32 = CAMERA_EDGE_SCROLL_SPEED * camera_move_speed_multiplier * time_data._delta_time as f32;
         if pressed_key_w {
-            let move_delta = front_xz * -camera_move_speed;
+            let move_delta = front_xz * camera_move_speed;
             main_camera._transform_object.move_position(&move_delta);
         }
         else if pressed_key_s {
-            let move_delta = front_xz * camera_move_speed;
+            let move_delta = front_xz * -camera_move_speed;
             main_camera._transform_object.move_position(&move_delta);
         }
 
@@ -92,12 +92,12 @@ impl GameController {
 
         // set yaw
         if 0.0 != mouse_delta.x {
-            main_camera._transform_object.rotation_yaw(-mouse_delta.x * 0.5 * time_data._delta_time as f32);
+            main_camera._transform_object.rotation_yaw(mouse_delta.x * 0.5 * time_data._delta_time as f32);
         }
 
         // set pitch
         if 0.0 != mouse_delta.y {
-            let pitch = MOUSE_PITCH_MIN.max(MOUSE_PITCH_MAX.min(main_camera._transform_object.get_pitch() - mouse_delta.y * MOUSE_ROTATION_SPEED));
+            let pitch = MOUSE_PITCH_MIN.max(MOUSE_PITCH_MAX.min(main_camera._transform_object.get_pitch() + mouse_delta.y * MOUSE_ROTATION_SPEED));
             main_camera._transform_object.set_pitch(pitch);
         }
 
