@@ -83,8 +83,6 @@ resources/externals/textures/sponza/sponza_floor_a_spec.png
 resources/externals/textures/sponza/sponza_ceiling_a_spec.png
 resources/externals/textures/sponza/sponza_roof_diff.png
 resources/externals/textures/stages/default_stage_heightmap.png
-resources/externals/meshes/mutant.mtl
-resources/externals/meshes/untitled.gltf
 resources/externals/meshes/mutant_walk.gltf
 resources/externals/meshes/sponza/sponza.obj
 resources/externals/meshes/stages/default_stage.obj
@@ -113,12 +111,14 @@ resources/engine_resources/shader_caches/common/render_motion_blur.frag.spirv
 resources/engine_resources/shader_caches/common/render_object_RenderMode0_RenderObjectType0.vert.spirv
 resources/engine_resources/shader_caches/common/generate_max_z.comp.spirv
 resources/engine_resources/shader_caches/common/render_object_RenderMode3_RenderObjectType1.frag.spirv
+resources/engine_resources/shader_caches/common/render_debug_line.frag.spirv
 resources/engine_resources/shader_caches/common/render_object_RenderMode0_RenderObjectType1.frag.spirv
 resources/engine_resources/shader_caches/common/render_object_RenderMode2_RenderObjectType0.vert.spirv
 resources/engine_resources/shader_caches/common/render_taa_simple.frag.spirv
 resources/engine_resources/shader_caches/common/blend_cube_map.comp.spirv
 resources/engine_resources/shader_caches/common/downsampling.comp.spirv
 resources/engine_resources/shader_caches/common/render_object_RenderMode1_RenderObjectType1.frag.spirv
+resources/engine_resources/shader_caches/common/render_debug_line.vert.spirv
 resources/engine_resources/shader_caches/common/render_gaussian_blur.frag.spirv
 resources/engine_resources/shader_caches/common/render_object_RenderMode1_RenderObjectType0.frag.spirv
 resources/engine_resources/shader_caches/common/render_quad_RENDER_FFT_X.vert.spirv
@@ -248,6 +248,7 @@ resources/engine_resources/material_instances/common/render_color.matinst
 resources/engine_resources/material_instances/common/render_debug.matinst
 resources/engine_resources/material_instances/common/generate_max_z.matinst
 resources/engine_resources/material_instances/common/composite_gbuffer.matinst
+resources/engine_resources/material_instances/common/render_debug_line.matinst
 resources/engine_resources/material_instances/common/render_final.matinst
 resources/engine_resources/material_instances/common/render_ssr.matinst
 resources/engine_resources/material_instances/common/clear_render_target.matinst
@@ -293,6 +294,7 @@ resources/engine_resources/shaders/common/default.vert
 resources/engine_resources/shaders/common/render_bloom_downsampling.frag
 resources/engine_resources/shaders/common/light_scatter.frag
 resources/engine_resources/shaders/common/selected_object.frag
+resources/engine_resources/shaders/common/render_debug_line_common.glsl
 resources/engine_resources/shaders/common/render_quad_common.glsl
 resources/engine_resources/shaders/common/render_ssr.frag
 resources/engine_resources/shaders/common/render_object_color.frag
@@ -306,8 +308,10 @@ resources/engine_resources/shaders/common/light_shaft.frag
 resources/engine_resources/shaders/common/blending.glsl
 resources/engine_resources/shaders/common/utility.glsl
 resources/engine_resources/shaders/common/convolve_environment.frag
+resources/engine_resources/shaders/common/render_debug_line.frag
 resources/engine_resources/shaders/common/render_color.frag
 resources/engine_resources/shaders/common/composite_gbuffer.frag
+resources/engine_resources/shaders/common/render_debug_line.vert
 resources/engine_resources/shaders/common/default.frag
 resources/engine_resources/shaders/common/random.glsl
 resources/engine_resources/shaders/common/render_object.frag
@@ -402,6 +406,7 @@ resources/engine_resources/materials/common/render_static_object.mat
 resources/engine_resources/materials/common/render_copy.mat
 resources/engine_resources/materials/common/render_bloom.mat
 resources/engine_resources/materials/common/render_motion_blur.mat
+resources/engine_resources/materials/common/render_debug_line.mat
 resources/engine_resources/materials/common/render_final.mat
 resources/engine_resources/materials/common/render_gaussian_blur.mat
 resources/engine_resources/materials/common/render_ssao.mat
@@ -452,6 +457,7 @@ resources/shaders/render_test.vert
 resources/scenes/sponza.scene
 resources/models/untitled.model
 resources/models/mutant.model
+resources/models/monkey.model
 resources/models/mutant_walk.model
 resources/models/sponza/sponza.model
 resources/materials/render_test.mat

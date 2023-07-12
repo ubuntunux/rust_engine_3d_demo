@@ -75,7 +75,7 @@ pub struct ProjectSceneManager {
     pub _skeletal_render_elements: Vec<RenderElementData>,
     pub _skeletal_shadow_render_elements: Vec<RenderElementData>,
     pub _render_element_transform_count: usize,
-    pub _render_element_transform_metrices: Vec<Matrix4<f32>>,
+    pub _render_element_transform_matrices: Vec<Matrix4<f32>>,
 }
 
 
@@ -90,7 +90,7 @@ impl ProjectSceneManagerBase for ProjectSceneManager {
     fn get_skeletal_render_elements(&self) -> &Vec<RenderElementData> { &self._skeletal_render_elements }
     fn get_skeletal_shadow_render_elements(&self) -> &Vec<RenderElementData> { &self._skeletal_shadow_render_elements }
     fn get_render_element_transform_count(&self) -> usize { self._render_element_transform_count }
-    fn get_render_element_transform_metrices(&self) -> &Vec<Matrix4<f32>> { &self._render_element_transform_metrices }
+    fn get_render_element_transform_matrices(&self) -> &Vec<Matrix4<f32>> { &self._render_element_transform_matrices }
 }
 
 impl ProjectSceneManager {
@@ -147,7 +147,7 @@ impl ProjectSceneManager {
             _skeletal_render_elements: Vec::new(),
             _skeletal_shadow_render_elements: Vec::new(),
             _render_element_transform_count: 0,
-            _render_element_transform_metrices: vec![Matrix4::identity(); MAX_TRANSFORM_COUNT],
+            _render_element_transform_matrices: vec![Matrix4::identity(); MAX_TRANSFORM_COUNT],
         })
     }
 
@@ -277,7 +277,7 @@ impl ProjectSceneManager {
         render_elements: &mut Vec<RenderElementData>,
         render_shadow_elements: &mut Vec<RenderElementData>,
         render_element_transform_offset: &mut usize,
-        render_element_transform_metrices: &mut Vec<Matrix4<f32>>
+        render_element_transform_matrices: &mut Vec<Matrix4<f32>>
     ) {
         render_elements.clear();
         render_shadow_elements.clear();
@@ -333,11 +333,11 @@ impl ProjectSceneManager {
                 }
 
                 // loca matrix prev
-                render_element_transform_metrices[transform_offset].copy_from(render_object_data._transform_object.get_prev_matrix());
+                render_element_transform_matrices[transform_offset].copy_from(render_object_data._transform_object.get_prev_matrix());
                 transform_offset += local_matrix_prev_count;
 
                 // local matrix
-                render_element_transform_metrices[transform_offset].copy_from(render_object_data._transform_object.get_matrix());
+                render_element_transform_matrices[transform_offset].copy_from(render_object_data._transform_object.get_matrix());
                 transform_offset += local_matrix_count;
 
                 if RenderObjectType::Skeletal == render_object_type {
@@ -345,14 +345,14 @@ impl ProjectSceneManager {
                     let prev_animation_buffer: &Vec<Matrix4<f32>> = render_object_data.get_prev_animation_buffer(0);
                     assert_eq!(bone_count, prev_animation_buffer.len());
                     let next_transform_offset: usize = transform_offset + bone_count;
-                    render_element_transform_metrices[transform_offset..next_transform_offset].copy_from_slice(prev_animation_buffer);
+                    render_element_transform_matrices[transform_offset..next_transform_offset].copy_from_slice(prev_animation_buffer);
                     transform_offset = next_transform_offset;
 
                     // current animation buffer
                     let animation_buffer: &Vec<Matrix4<f32>> = render_object_data.get_animation_buffer(0);
                     assert_eq!(bone_count, animation_buffer.len());
                     let next_transform_offset: usize = transform_offset + bone_count;
-                    render_element_transform_metrices[transform_offset..next_transform_offset].copy_from_slice(animation_buffer);
+                    render_element_transform_matrices[transform_offset..next_transform_offset].copy_from_slice(animation_buffer);
                     transform_offset = next_transform_offset;
                 }
 
@@ -650,7 +650,7 @@ impl ProjectSceneManager {
                 &mut self._static_render_elements,
                 &mut self._static_shadow_render_elements,
                 &mut self._render_element_transform_count,
-                &mut self._render_element_transform_metrices
+                &mut self._render_element_transform_matrices
             );
 
             ProjectSceneManager::gather_render_elements(
@@ -661,7 +661,7 @@ impl ProjectSceneManager {
                 &mut self._skeletal_render_elements,
                 &mut self._skeletal_shadow_render_elements,
                 &mut self._render_element_transform_count,
-                &mut self._render_element_transform_metrices
+                &mut self._render_element_transform_matrices
             );
         }
 

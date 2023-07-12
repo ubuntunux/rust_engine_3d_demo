@@ -35,7 +35,7 @@ problem is ndk-glue 0.3 is not compatibility with winit make freeze.
     - Mesh 
         - [x] .obj, .dae ( colada )
         - [ ] .fbx 
-        - [ ] gltf, blender
+        - [x] .gltf
     - Texture
         - [x] .png, .tga, .bmp etc 
         - [ ] Compressed Texture (ETC, DDS)
