@@ -50,6 +50,7 @@ impl ProjectApplicationBase for ProjectApplication {
         self.get_game_client_mut().initialize_game_client(self);
 
         // start game
+        self.set_game_mode(self._is_game_mode);
         self.get_game_client_mut().start_game();
     }
 
@@ -208,6 +209,7 @@ impl ProjectApplication {
     pub fn toggle_game_mode(&mut self) { self.set_game_mode(!self._is_game_mode); }
     pub fn set_game_mode(&mut self, is_game_mode: bool) {
         self._is_game_mode = is_game_mode;
+        self.get_game_client_mut().set_game_mode(is_game_mode);
         self.get_engine_application_mut().set_grab_mode(is_game_mode);
     }
 }

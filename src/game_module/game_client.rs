@@ -74,6 +74,11 @@ impl GameClient {
         self.get_project_scene_manager_mut().open_scene_data("sponza");
     }
 
+    pub fn set_game_mode(&mut self, is_game_mode: bool) {
+        let game_ui_layout_mut = ptr_as_mut(self.get_project_ui_manager().game_ui_layout());
+        game_ui_layout_mut.get_ui_component_mut().set_visible(is_game_mode);
+    }
+
     pub fn update_game_event(&mut self) {
         let project_application = ptr_as_ref(self._project_application);
         let engine_application = project_application.get_engine_application();
