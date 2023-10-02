@@ -424,7 +424,6 @@ resources/engine_resources/materials/precomputed_atmosphere/precomputed_atmosphe
 resources/material_instances/ui/render_ui_test.matinst
 resources/material_instances/ui/crosshair.matinst
 resources/material_instances/effects/default.matinst
-resources/material_instances/mutant.matinst
 resources/material_instances/sponza/m4arch.matinst
 resources/material_instances/sponza/m17fabric_g.matinst
 resources/material_instances/sponza/m20leaf.matinst
@@ -455,9 +454,5 @@ resources/material_instances/render_test.matinst
 resources/shaders/render_test.frag
 resources/shaders/render_test.vert
 resources/scenes/sponza.scene
-resources/models/untitled.model
-resources/models/mutant.model
-resources/models/monkey.model
-resources/models/mutant_walk.model
 resources/models/sponza/sponza.model
 resources/materials/render_test.mat

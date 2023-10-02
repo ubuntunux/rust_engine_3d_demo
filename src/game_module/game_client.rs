@@ -103,8 +103,7 @@ impl GameClient {
         );
     }
 
-    pub fn update_game_client(&mut self) {
-        let delta_time = self.get_project_application().get_engine_application()._time_data._delta_time as f32;
+    pub fn update_game_client(&mut self, delta_time: f32) {
         self._game_controller.update_game_controller(delta_time);
         self._game_ui_manager.update_game_ui(delta_time);
     }

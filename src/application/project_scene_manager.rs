@@ -288,6 +288,9 @@ impl ProjectSceneManager {
             let mesh_data = model_data.get_mesh_data().borrow();
             let geometry_datas = mesh_data.get_geomtry_datas();
             let material_instance_datas = model_data.get_material_instance_datas();
+            let is_render = false == ProjectSceneManager::view_frustum_culling_geometry(camera, &render_object_data._bound_box);
+            let is_render_shadow = false == ProjectSceneManager::shadow_culling(light, &render_object_data._bound_box);
+
             for index in 0..geometry_datas.len() {
                 let mut transform_offset = *render_element_transform_offset;
                 let local_matrix_count = 1usize;
@@ -296,32 +299,27 @@ impl ProjectSceneManager {
                 // transform matrix offset: _localMatrixPrev + _localMatrix + prev_animation_bone_count + curr_animation_bone_count
                 let required_transform_count = local_matrix_count + local_matrix_prev_count + bone_count + bone_count;
                 let push_constant_datas: *const Vec<PipelinePushConstantData> = render_object_data.get_push_constant_datas(index);
-
-                // view frustum culling
-                let mut render_something: bool = false;
-                if (transform_offset + required_transform_count) <= MAX_TRANSFORM_COUNT {
-                    if false == ProjectSceneManager::view_frustum_culling_geometry(camera, &render_object_data._geometry_bound_boxes[index]) {
+                let render_something: bool = is_render || is_render_shadow;
+                if render_something && (transform_offset + required_transform_count) <= MAX_TRANSFORM_COUNT {
+                    if is_render {
                         render_elements.push(RenderElementData {
                             _render_object: render_object_data_ref.clone(),
                             _geometry_data: geometry_datas[index].clone(),
                             _material_instance_data: material_instance_datas[index].clone(),
                             _push_constant_datas: push_constant_datas.clone()
                         });
-                        render_something = true;
                     }
 
-                    if false == ProjectSceneManager::shadow_culling(light, &render_object_data._geometry_bound_boxes[index]) {
+                    if is_render_shadow {
                         render_shadow_elements.push(RenderElementData {
                             _render_object: render_object_data_ref.clone(),
                             _geometry_data: geometry_datas[index].clone(),
                             _material_instance_data: material_instance_datas[index].clone(),
                             _push_constant_datas: push_constant_datas.clone()
                         });
-                        render_something = true;
                     }
-                }
-
-                if false == render_something {
+                } else {
+                    // not visible
                     return;
                 }
 
@@ -615,11 +613,7 @@ impl ProjectSceneManager {
     pub fn destroy_project_scene_manager(&mut self) {
     }
 
-    pub fn update_project_scene_manager(&mut self, engine_application: &EngineApplication) {
-        let time_data = &engine_application._time_data;
-        let font_manager = engine_application.get_font_manager_mut();
-        let delta_time: f64 = time_data._delta_time;
-
+    pub fn update_project_scene_manager(&mut self, engine_application: &EngineApplication, delta_time: f64) {
         let main_camera = ptr_as_mut(self.get_main_camera());
         main_camera.update_camera_object_data();
         let camera_position = &main_camera.get_camera_position();
@@ -666,7 +660,8 @@ impl ProjectSceneManager {
         }
 
         // debug text
-        font_manager.clear_logs();
+        let time_data = &engine_application._time_data;
+        let font_manager = engine_application.get_font_manager_mut();
         font_manager.log(format!("{:.2}fps / {:.3}ms", time_data._average_fps, time_data._average_frame_time));
         font_manager.log(format!("StaticMesh: {:?}, Shadow: {:?}", self._static_render_elements.len(), self._static_shadow_render_elements.len()));
         font_manager.log(format!("SkeletalMesh: {:?}, Shadow: {:?}", self._skeletal_render_elements.len(), self._skeletal_shadow_render_elements.len()));

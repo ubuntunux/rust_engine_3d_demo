@@ -15,6 +15,7 @@ use rust_engine_3d::application::audio_manager::AudioManager;
 use rust_engine_3d::application::scene_manager::ProjectSceneManagerBase;
 use rust_engine_3d::effect::effect_manager::EffectManager;
 use rust_engine_3d::renderer::renderer_data::RendererData;
+use rust_engine_3d::renderer::ui::ProjectUIManagerBase;
 use rust_engine_3d::utilities::system::{ptr_as_ref, ptr_as_mut};
 use crate::application_constants;
 use crate::application::project_scene_manager::ProjectSceneManager;
@@ -179,13 +180,17 @@ impl ProjectApplicationBase for ProjectApplication {
         }
     }
 
-    fn update_project_application(&mut self) {
+    fn update_project_application(&mut self, delta_time: f64) {
+        let engine_application = unsafe { &*self._engine_application };
+        let font_manager = engine_application.get_font_manager_mut();
+        font_manager.clear_logs();
+
         if self._is_game_mode {
-            self._game_client.update_game_client();
+            self._game_client.update_game_client(delta_time as f32);
         }
 
-        let engine_application = unsafe { &*self._engine_application };
-        self._project_scene_manager.update_project_scene_manager(engine_application);
+        self._project_scene_manager.update_project_scene_manager(engine_application, delta_time);
+        self._project_ui_manager.update_ui_manager(engine_application, delta_time);
     }
 }
 
@@ -216,7 +221,7 @@ impl ProjectApplication {
 
 pub fn run_project_application() {
     // application setting
-    let app_name: String = "Destruction Zone".to_string();
+    let app_name: String = "Rust Engine 3D Demo".to_string();
     let app_version: u32 = 1;
     let initial_window_size: Vector2<i32> = Vector2::new(1024, 768);
     let window_mode = WindowMode::WindowMode;
