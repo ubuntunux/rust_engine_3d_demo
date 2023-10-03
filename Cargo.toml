@@ -10,38 +10,16 @@ edition = "2021"
 
 [dependencies]
 rust_engine_3d = { path = "RustEngine3D" }
-ash = "0.37.0"
-ash-window = "0.10.0"
-bincode = "1.2.1"
-byteorder = "1.3.4"
-cgmath = "0.17"
-chrono = "0.4.15"
-env_logger = "0.7.0"
-image = "0.23.13"
+ash = "0.37.3"
 log = "0.4"
-nalgebra = {version = "0.23.1", features = ["serde-serialize"]}
-nalgebra-glm = "0.9"
-time = "0.1.38"
-rand = "0.7"
-rusttype = "0.9.2"
+nalgebra = {version = "0.32.3", features = ["serde-serialize"]}
+nalgebra-glm = "0.18.0"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-winit = "0.24"
-winit_input_helper = "0.9.0"
-which = "4.0.2"
-xml-rs = "0.8"
-raw-window-handle = "0.4.3"
-# android
-#anyhow = "1.0.12"
-#cpal = "0.13.3"
-#ndk-glue = "0.3"
+winit = "0.28.7"
 
 [[bin]]
 name = "rust_engine_3d_demo"
-
-#[lib]
-#name = "rust_engine_3d_demo_lib"
-#crate-type = ["lib", "cdylib"]
 
 [target.'cfg(target_os = "android")'.dependencies]
 ndk-glue = "0.2"
