@@ -397,63 +397,6 @@ impl ProjectSceneManager {
             }
         );
 
-        // scene_data_create_info._effects.insert(
-        //     String::from("effect0"),
-        //     EffectCreateInfo {
-        //         _effect_data_name: String::from("default"),
-        //         _effect_position: Vector3::new(0.0, 4.0, 0.0),
-        //         ..Default::default()
-        //     }
-        // );
-        //
-        // scene_data_create_info._effects.insert(
-        //     String::from("effect1"),
-        //     EffectCreateInfo {
-        //         _effect_data_name: String::from("test"),
-        //         _effect_position: Vector3::new(4.0, 4.0, 0.0),
-        //         ..Default::default()
-        //     }
-        // );
-        //
-        // scene_data_create_info._effects.insert(
-        //     String::from("effect2"),
-        //     EffectCreateInfo {
-        //         _effect_data_name: String::from("test2"),
-        //         _effect_position: Vector3::new(8.0, 4.0, 0.0),
-        //         ..Default::default()
-        //     }
-        // );
-        // scene_data_create_info._static_objects.insert(
-        //     String::from("sponza"),
-        //     RenderObjectCreateInfo {
-        //         _model_data_name: String::from("sponza/sponza"),
-        //         _position: Vector3::new(0.0, 0.0, 0.0),
-        //         _scale: Vector3::new(0.1, 0.1, 0.1),
-        //         ..Default::default()
-        //     }
-        // );
-        // scene_data_create_info._static_objects.insert(
-        //     String::from("sphere"),
-        //     RenderObjectCreateInfo {
-        //         _model_data_name: String::from("sphere"),
-        //         _position: Vector3::new(-2.0, 1.0, 0.0),
-        //         _scale: Vector3::new(1.0, 1.0, 1.0),
-        //         ..Default::default()
-        //     }
-        // );
-        //
-        // for i in 0..3 {
-        //     scene_data_create_info._skeletal_objects.insert(
-        //         format!("skeletal_{}", i),
-        //         RenderObjectCreateInfo {
-        //             _model_data_name: String::from("skeletal"),
-        //             _position: Vector3::new(i as f32, 1.0, 0.0),
-        //             _scale: Vector3::new(0.01, 0.01, 0.01),
-        //             ..Default::default()
-        //         }
-        //     );
-        // }
-
         scene_data_create_info._static_objects.insert(
             String::from("stage"),
             RenderObjectCreateInfo {
