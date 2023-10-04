@@ -286,36 +286,36 @@ impl ProjectSceneManager {
             let render_object_data = render_object_data_ref.borrow();
             let model_data = ptr_as_ref(render_object_data.get_model_data().as_ptr());
             let mesh_data = model_data.get_mesh_data().borrow();
-            let geometry_datas = mesh_data.get_geomtry_datas();
-            let material_instance_datas = model_data.get_material_instance_datas();
+            let geometry_data_list = mesh_data.get_geometry_data_list();
+            let material_instance_data_list = model_data.get_material_instance_data_list();
             let is_render = false == ProjectSceneManager::view_frustum_culling_geometry(camera, &render_object_data._bound_box);
             let is_render_shadow = false == ProjectSceneManager::shadow_culling(light, &render_object_data._bound_box);
 
-            for index in 0..geometry_datas.len() {
+            for index in 0..geometry_data_list.len() {
                 let mut transform_offset = *render_element_transform_offset;
                 let local_matrix_count = 1usize;
                 let local_matrix_prev_count = 1usize;
                 let bone_count = render_object_data.get_bone_count();
                 // transform matrix offset: _localMatrixPrev + _localMatrix + prev_animation_bone_count + curr_animation_bone_count
                 let required_transform_count = local_matrix_count + local_matrix_prev_count + bone_count + bone_count;
-                let push_constant_datas: *const Vec<PipelinePushConstantData> = render_object_data.get_push_constant_datas(index);
+                let push_constant_data_list: *const Vec<PipelinePushConstantData> = render_object_data.get_push_constant_data_list(index);
                 let render_something: bool = is_render || is_render_shadow;
                 if render_something && (transform_offset + required_transform_count) <= MAX_TRANSFORM_COUNT {
                     if is_render {
                         render_elements.push(RenderElementData {
                             _render_object: render_object_data_ref.clone(),
-                            _geometry_data: geometry_datas[index].clone(),
-                            _material_instance_data: material_instance_datas[index].clone(),
-                            _push_constant_datas: push_constant_datas.clone()
+                            _geometry_data: geometry_data_list[index].clone(),
+                            _material_instance_data: material_instance_data_list[index].clone(),
+                            _push_constant_data_list: push_constant_data_list.clone()
                         });
                     }
 
                     if is_render_shadow {
                         render_shadow_elements.push(RenderElementData {
                             _render_object: render_object_data_ref.clone(),
-                            _geometry_data: geometry_datas[index].clone(),
-                            _material_instance_data: material_instance_datas[index].clone(),
-                            _push_constant_datas: push_constant_datas.clone()
+                            _geometry_data: geometry_data_list[index].clone(),
+                            _material_instance_data: material_instance_data_list[index].clone(),
+                            _push_constant_data_list: push_constant_data_list.clone()
                         });
                     }
                 } else {
@@ -324,13 +324,13 @@ impl ProjectSceneManager {
                 }
 
                 // set transform_offset
-                let push_constant_datas_mut = ptr_as_mut(push_constant_datas);
-                for push_constant_data_mut in push_constant_datas_mut.iter_mut() {
+                let push_constant_data_list_mut = ptr_as_mut(push_constant_data_list);
+                for push_constant_data_mut in push_constant_data_list_mut.iter_mut() {
                     push_constant_data_mut._push_constant.set_push_constant_parameter("_transform_matrix_offset", &PushConstantParameter::Int(transform_offset as i32));
                     push_constant_data_mut._push_constant.set_push_constant_parameter("_bone_count", &PushConstantParameter::Int(bone_count as i32));
                 }
 
-                // loca matrix prev
+                // local matrix prev
                 render_element_transform_matrices[transform_offset].copy_from(render_object_data._transform_object.get_prev_matrix());
                 transform_offset += local_matrix_prev_count;
 

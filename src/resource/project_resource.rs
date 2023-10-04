@@ -35,15 +35,15 @@ impl ProjectResourcesBase for ProjectResources {
     }
 
     fn load_project_resources(&mut self, renderer_context: &RendererContext) {
-        self.load_scene_datas(renderer_context);
+        self.load_scene_data_list(renderer_context);
     }
 
     fn destroy_project_resources(&mut self, renderer_context: &RendererContext) {
-        self.unload_scene_datas(renderer_context);
+        self.unload_scene_data_list(renderer_context);
     }
-    fn load_graphics_datas(&mut self, _renderer_context: &RendererContext) {
+    fn load_graphics_data_list(&mut self, _renderer_context: &RendererContext) {
     }
-    fn unload_graphics_datas(&mut self, _renderer_context: &RendererContext) {
+    fn unload_graphics_data_list(&mut self, _renderer_context: &RendererContext) {
     }
     fn load_render_pass_data_create_infos(&mut self, renderer_context: &RendererContext, render_pass_data_create_info_map: &mut RenderPassDataCreateInfoMap) {
         render_pass::get_render_pass_data_create_infos(renderer_context, render_pass_data_create_info_map);
@@ -126,8 +126,8 @@ impl ProjectResources {
     }
 
     // SceneData
-    pub fn load_scene_datas(&mut self, _renderer_context: &RendererContext) {
-        log::info!("    load_scene_datas");
+    pub fn load_scene_data_list(&mut self, _renderer_context: &RendererContext) {
+        log::info!("    load_scene_data_list");
         let scene_directory = PathBuf::from(SCENE_FILE_PATH);
         let scene_data_files: Vec<PathBuf> = self.collect_resources(&scene_directory, &[EXT_SCENE]);
         for scene_data_file in scene_data_files {
@@ -138,7 +138,7 @@ impl ProjectResources {
         }
     }
 
-    pub fn unload_scene_datas(&mut self, _renderer_context: &RendererContext) {
+    pub fn unload_scene_data_list(&mut self, _renderer_context: &RendererContext) {
         self._scene_data_create_infos_map.clear();
     }
 

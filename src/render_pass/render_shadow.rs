@@ -15,7 +15,7 @@ pub fn get_render_pass_data_create_info(render_object_type: RenderObjectType, re
     pipeline_data_create_info._pipeline_data_create_info_name = String::from("render_test");
     pipeline_data_create_info._pipeline_vertex_shader_file = PathBuf::from("render_test.vert");
     pipeline_data_create_info._pipeline_fragment_shader_file = PathBuf::from("render_test.frag");
-    pipeline_data_create_info._push_constant_datas = vec![
+    pipeline_data_create_info._push_constant_data_list = vec![
         PipelinePushConstantData {
             _stage_flags: vk::ShaderStageFlags::ALL,
             _offset: 0,
