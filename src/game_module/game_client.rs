@@ -1,7 +1,6 @@
 use nalgebra::Vector2;
 
 use rust_engine_3d::application::audio_manager::AudioManager;
-use rust_engine_3d::application::scene_manager::ProjectSceneManagerBase;
 use rust_engine_3d::effect::effect_manager::EffectManager;
 use rust_engine_3d::utilities::system::{ptr_as_ref, ptr_as_mut};
 use crate::application::project_application::ProjectApplication;
@@ -82,7 +81,8 @@ impl GameClient {
     pub fn update_game_event(&mut self) {
         let project_application = ptr_as_ref(self._project_application);
         let engine_application = project_application.get_engine_application();
-        let project_scene_manager = ptr_as_ref(self._project_scene_manager);
+        let project_scene_manager = project_application.get_project_scene_manager();
+        let scene_manager = project_scene_manager.get_scene_manager();
         let time_data = &engine_application._time_data;
         let mouse_move_data = &engine_application._mouse_move_data;
         let mouse_input_data = &engine_application._mouse_input_data;
@@ -91,7 +91,7 @@ impl GameClient {
         let mouse_delta: Vector2<f32> = Vector2::new(mouse_move_data._mouse_pos_delta.x as f32 / mouse_speed_ratio, mouse_move_data._mouse_pos_delta.y as f32 / mouse_speed_ratio);
         let _scroll_delta = &mouse_move_data._scroll_delta;
 
-        let main_camera = project_scene_manager.get_main_camera_mut();
+        let main_camera = scene_manager.get_main_camera_mut();
 
         self._game_controller.update_game_event(
             time_data,

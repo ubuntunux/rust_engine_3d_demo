@@ -12,7 +12,6 @@ use rust_engine_3d::application::application::{
     WindowMode
 };
 use rust_engine_3d::application::audio_manager::AudioManager;
-use rust_engine_3d::application::scene_manager::ProjectSceneManagerBase;
 use rust_engine_3d::effect::effect_manager::EffectManager;
 use rust_engine_3d::renderer::renderer_data::RendererData;
 use rust_engine_3d::renderer::ui::ProjectUIManagerBase;
@@ -43,10 +42,11 @@ impl ProjectApplicationBase for ProjectApplication {
         self._renderer_data = engine_application.get_renderer_context().get_renderer_data();
 
         self.get_project_scene_manager_mut().initialize_project_scene_manager(
+            engine_application.get_scene_manager_mut(),
             engine_application.get_renderer_context(),
             engine_application.get_effect_manager(),
             engine_application.get_engine_resources(),
-            window_size,
+            window_size
         );
         self.get_game_client_mut().initialize_game_client(self);
 
@@ -62,10 +62,6 @@ impl ProjectApplicationBase for ProjectApplication {
         // destroy managers
         self._game_client.destroy_game_client();
         self._project_scene_manager.destroy_project_scene_manager();
-    }
-
-    fn resized_window(&self, width: i32, height: i32) {
-        self._project_scene_manager.resized_window(width, height);
     }
 
     fn update_event(&mut self) {
@@ -116,8 +112,9 @@ impl ProjectApplicationBase for ProjectApplication {
             let released_key_equals = keyboard_input_data.get_key_released(VirtualKeyCode::Equals);
             let modifier_keys_shift = keyboard_input_data.get_key_hold(VirtualKeyCode::LShift);
 
-            let main_camera = self.get_project_scene_manager().get_main_camera_mut();
-            let mut main_light = self.get_project_scene_manager()._main_light.borrow_mut();
+            let scene_manager = self.get_project_scene_manager().get_scene_manager();
+            let main_camera = scene_manager.get_main_camera_mut();
+            let mut main_light = scene_manager._main_light.borrow_mut();
             let camera_move_speed_multiplier = if modifier_keys_shift { 2.0 } else { 1.0 };
             let move_speed: f32 = application_constants::CAMERA_MOVE_SPEED * camera_move_speed_multiplier * delta_time as f32;
             let pan_speed = application_constants::CAMERA_PAN_SPEED * camera_move_speed_multiplier;
@@ -181,7 +178,7 @@ impl ProjectApplicationBase for ProjectApplication {
     }
 
     fn update_project_application(&mut self, delta_time: f64) {
-        let engine_application = unsafe { &*self._engine_application };
+        let engine_application = ptr_as_ref(self._engine_application);
         let font_manager = engine_application.get_font_manager_mut();
         font_manager.clear_logs();
 

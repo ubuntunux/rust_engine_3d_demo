@@ -1,6 +1,5 @@
 use nalgebra::{ Vector2 };
 
-use rust_engine_3d::application::scene_manager::ProjectSceneManagerBase;
 use rust_engine_3d::renderer::ui::{Widget, WidgetDefault};
 use rust_engine_3d::utilities::system::{ptr_as_ref, ptr_as_mut};
 use crate::game_module::game_client::GameClient;
@@ -75,7 +74,6 @@ impl GameUIManager {
 
     pub fn update_game_ui(&mut self, _delta_time: f32) {
         let game_client = ptr_as_ref(self._game_client);
-        let _main_camera = game_client.get_project_scene_manager().get_main_camera();
         let window_size = &game_client.get_project_application().get_engine_application()._window_size;
 
         // Cross Hair

@@ -7,7 +7,7 @@ use rust_engine_3d::renderer::ui::{ProjectUIManagerBase, UIManager, UIWidgetType
 use rust_engine_3d::renderer::renderer_context::RendererContext;
 use rust_engine_3d::resource::resource::EngineResources;
 use rust_engine_3d::vulkan_context::vulkan_context::{ get_color32 };
-use rust_engine_3d::utilities::system::{ptr_as_mut};
+use rust_engine_3d::utilities::system::{ptr_as_mut, ptr_as_ref};
 
 // Declaration
 pub struct ProjectUIManager {
@@ -47,19 +47,19 @@ impl ProjectUIManager {
 
 impl ProjectUIManagerBase for ProjectUIManager {
     fn get_ui_manager(&self) -> &UIManager {
-        unsafe { &*(self._ui_manager) }
+        ptr_as_ref(self._ui_manager)
     }
 
     fn get_ui_manager_mut(&self) -> &mut UIManager {
-        unsafe { &mut *(self._ui_manager as *mut UIManager) }
+        ptr_as_mut(self._ui_manager)
     }
 
     fn get_root_widget(&self) -> &dyn Widget {
-        unsafe { &*self._root_widget }
+        ptr_as_ref(self._root_widget)
     }
 
     fn get_root_widget_mut(&self) -> &mut dyn Widget {
-        unsafe { &mut *(self._root_widget as *mut dyn Widget) }
+        ptr_as_mut(self._root_widget as *mut dyn Widget)
     }
 
     fn initialize_project_ui_manager(&mut self, ui_manager: &UIManager) {
@@ -86,7 +86,7 @@ impl ProjectUIManagerBase for ProjectUIManager {
     }
 
     fn update_ui_manager(&mut self, engine_application: &EngineApplication, _delta_time: f64) {
-        let main_camera = engine_application.get_project_scene_manager().get_main_camera();
+        let main_camera = engine_application.get_scene_manager().get_main_camera();
         let window_height: f32 = main_camera._window_size.y as f32;
         let size: f32 = window_height * 0.05;
         let border: f32 = 20.0;

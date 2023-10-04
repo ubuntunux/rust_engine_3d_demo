@@ -3,7 +3,6 @@ use winit::event::VirtualKeyCode;
 
 use rust_engine_3d::application::application::TimeData;
 use rust_engine_3d::application::input::{KeyboardInputData, MouseMoveData, MouseInputData};
-use rust_engine_3d::application::scene_manager::ProjectSceneManagerBase;
 use rust_engine_3d::renderer::camera::CameraObjectData;
 use rust_engine_3d::utilities::system::{ptr_as_ref, ptr_as_mut};
 use crate::game_module::game_constants::{
@@ -37,10 +36,10 @@ impl GameController {
     pub fn get_game_ui_manager(&self) -> &GameUIManager { ptr_as_ref(self._game_ui_manager) }
     pub fn get_game_ui_manager_mut(&self) -> &mut GameUIManager { ptr_as_mut(self._game_ui_manager) }
     pub fn get_main_camera(&self) -> &CameraObjectData {
-        self.get_game_client().get_project_scene_manager().get_main_camera()
+        self.get_game_client().get_project_scene_manager().get_scene_manager().get_main_camera()
     }
     pub fn get_main_camera_mut(&self) -> &mut CameraObjectData {
-        self.get_game_client().get_project_scene_manager().get_main_camera_mut()
+        self.get_game_client().get_project_scene_manager().get_scene_manager().get_main_camera_mut()
     }
     pub fn update_game_event(
         &mut self,
