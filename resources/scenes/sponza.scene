@@ -27,6 +27,6 @@
     "sphere":{"_model_data_name":"sphere","_position":[35.0,15.0,0.0],"_rotation":[0.0,0.0,0.0],"_scale":[3.0,3.0,3.0]}
 },
 "_skeletal_objects":{
-    "skeletal0": {"_model_data_name":"mutant_walk", "_position":[5.0,12.0,0.0], "_rotation":[0.0,0.0,0.0], "_scale":[10.0,10.0,10.0]}
+    "skeletal0": {"_model_data_name":"mutant", "_position":[5.0,12.0,0.0], "_rotation":[0.0,0.0,0.0], "_scale":[10.0,10.0,10.0]}
 }
 }

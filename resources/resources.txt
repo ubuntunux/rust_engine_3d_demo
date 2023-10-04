@@ -17,8 +17,6 @@ resources/externals/textures/ui/alert.png
 resources/externals/textures/ui/crosshair_box.png
 resources/externals/textures/ui/crosshair.png
 resources/externals/textures/effects/fire.png
-resources/externals/textures/mutant/mutant_normal.png
-resources/externals/textures/mutant/mutant_diffuse.png
 resources/externals/textures/sponza/vase_plant.png
 resources/externals/textures/sponza/sponza_thorn_spec.png
 resources/externals/textures/sponza/vase_round_spec.png
@@ -83,7 +81,6 @@ resources/externals/textures/sponza/sponza_floor_a_spec.png
 resources/externals/textures/sponza/sponza_ceiling_a_spec.png
 resources/externals/textures/sponza/sponza_roof_diff.png
 resources/externals/textures/stages/default_stage_heightmap.png
-resources/externals/meshes/mutant_walk.gltf
 resources/externals/meshes/sponza/sponza.obj
 resources/externals/meshes/stages/default_stage.obj
 resources/externals/meshes/stages/default_stage.blend
@@ -422,7 +419,6 @@ resources/engine_resources/materials/precomputed_atmosphere/precomputed_atmosphe
 resources/material_instances/ui/render_ui_test.matinst
 resources/material_instances/ui/crosshair.matinst
 resources/material_instances/effects/default.matinst
-resources/material_instances/mutant.matinst
 resources/material_instances/sponza/m4arch.matinst
 resources/material_instances/sponza/m17fabric_g.matinst
 resources/material_instances/sponza/m20leaf.matinst
@@ -453,6 +449,5 @@ resources/material_instances/render_test.matinst
 resources/shaders/render_test.frag
 resources/shaders/render_test.vert
 resources/scenes/sponza.scene
-resources/models/mutant_walk.model
 resources/models/sponza/sponza.model
 resources/materials/render_test.mat
