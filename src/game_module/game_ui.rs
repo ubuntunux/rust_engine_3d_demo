@@ -4,7 +4,7 @@ use rust_engine_3d::utilities::system::{ptr_as_mut, ptr_as_ref};
 
 use crate::game_module::game_client::GameClient;
 use crate::game_module::ui_widgets::hud::{CrossHair, PlayerHud, SelectionArea, TargetHud};
-use crate::renderer::project_ui::ProjectUIManager;
+use crate::scene::project_ui::ProjectUIManager;
 
 pub struct GameUIManager {
     pub _game_client: *const GameClient,

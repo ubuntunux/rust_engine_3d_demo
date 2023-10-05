@@ -1,7 +1,6 @@
-use nalgebra::Vector2;
 use std::os::raw::c_void;
-use std::rc::Rc;
 
+use nalgebra::Vector2;
 use rust_engine_3d::application::application::EngineApplication;
 use rust_engine_3d::renderer::renderer_context::RendererContext;
 use rust_engine_3d::resource::resource::EngineResources;
@@ -12,26 +11,8 @@ use rust_engine_3d::scene::ui::{
 use rust_engine_3d::utilities::system::{ptr_as_mut, ptr_as_ref};
 use rust_engine_3d::vulkan_context::vulkan_context::get_color32;
 
-// Declaration
-pub struct ProjectUIManager {
-    pub _ui_manager: *const UIManager,
-    pub _root_widget: *const dyn Widget,
-    pub _game_ui_layout: *const dyn Widget,
-    pub _ui_switch: Option<UISwitch>,
-    pub _ui_world_axis: Option<UIWorldAxis>,
-}
+use crate::scene::project_ui::{ProjectUIManager, UISwitch, UIWorldAxis};
 
-pub struct UISwitch {
-    pub _ui_switch_widget: Rc<dyn Widget>,
-}
-
-pub struct UIWorldAxis {
-    pub _widget_axis_x: Rc<dyn Widget>,
-    pub _widget_axis_y: Rc<dyn Widget>,
-    pub _widget_axis_z: Rc<dyn Widget>,
-}
-
-// Implementation
 impl ProjectUIManager {
     pub fn create_project_ui_manager() -> Box<ProjectUIManager> {
         Box::new(ProjectUIManager {

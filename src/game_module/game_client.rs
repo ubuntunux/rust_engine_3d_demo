@@ -1,14 +1,14 @@
 use nalgebra::Vector2;
+use rust_engine_3d::audio::audio_manager::AudioManager;
+use rust_engine_3d::effect::effect_manager::EffectManager;
+use rust_engine_3d::utilities::system::{ptr_as_mut, ptr_as_ref};
 
 use crate::application::project_application::ProjectApplication;
 use crate::application::project_scene_manager::ProjectSceneManager;
 use crate::game_module::game_controller::GameController;
 use crate::game_module::game_ui::GameUIManager;
-use crate::renderer::project_ui::ProjectUIManager;
 use crate::resource::project_resource::ProjectResources;
-use rust_engine_3d::audio::audio_manager::AudioManager;
-use rust_engine_3d::effect::effect_manager::EffectManager;
-use rust_engine_3d::utilities::system::{ptr_as_mut, ptr_as_ref};
+use crate::scene::project_ui::ProjectUIManager;
 
 pub struct GameClient {
     pub _project_application: *const ProjectApplication,

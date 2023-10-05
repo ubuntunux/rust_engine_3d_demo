@@ -15,8 +15,8 @@ use winit::event::VirtualKeyCode;
 use crate::application::project_scene_manager::ProjectSceneManager;
 use crate::application_constants;
 use crate::game_module::game_client::GameClient;
-use crate::renderer::project_ui::ProjectUIManager;
 use crate::resource::project_resource::ProjectResources;
+use crate::scene::project_ui::ProjectUIManager;
 
 pub struct ProjectApplication {
     pub _engine_application: *const EngineApplication,
