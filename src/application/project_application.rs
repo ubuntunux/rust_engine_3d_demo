@@ -1,14 +1,6 @@
+use ash::vk;
 use log::LevelFilter;
 use nalgebra::Vector2;
-
-use ash::vk;
-use winit::event::VirtualKeyCode;
-
-use crate::application::project_scene_manager::ProjectSceneManager;
-use crate::application_constants;
-use crate::game_module::game_client::GameClient;
-use crate::renderer::project_ui::ProjectUIManager;
-use crate::resource::project_resource::ProjectResources;
 use rust_engine_3d::application::application::{
     self, EngineApplication, ProjectApplicationBase, WindowMode,
 };
@@ -18,6 +10,13 @@ use rust_engine_3d::effect::effect_manager::EffectManager;
 use rust_engine_3d::renderer::renderer_data::RendererData;
 use rust_engine_3d::scene::ui::ProjectUIManagerBase;
 use rust_engine_3d::utilities::system::{ptr_as_mut, ptr_as_ref};
+use winit::event::VirtualKeyCode;
+
+use crate::application::project_scene_manager::ProjectSceneManager;
+use crate::application_constants;
+use crate::game_module::game_client::GameClient;
+use crate::renderer::project_ui::ProjectUIManager;
+use crate::resource::project_resource::ProjectResources;
 
 pub struct ProjectApplication {
     pub _engine_application: *const EngineApplication,
@@ -159,17 +158,17 @@ impl ProjectApplicationBase for ProjectApplication {
             if btn_left && btn_right {
                 main_camera
                     ._transform_object
-                    .move_right(pan_speed * mouse_delta_x as f32);
+                    .move_right(pan_speed * mouse_delta_x);
                 main_camera
                     ._transform_object
-                    .move_up(-pan_speed * mouse_delta_y as f32);
+                    .move_up(-pan_speed * mouse_delta_y);
             } else if btn_right {
                 main_camera
                     ._transform_object
-                    .rotation_pitch(rotation_speed * mouse_delta_y as f32);
+                    .rotation_pitch(rotation_speed * mouse_delta_y);
                 main_camera
                     ._transform_object
-                    .rotation_yaw(rotation_speed * mouse_delta_x as f32);
+                    .rotation_yaw(rotation_speed * mouse_delta_x);
             }
 
             if pressed_key_z {

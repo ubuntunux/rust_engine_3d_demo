@@ -22,7 +22,7 @@ winit = "0.28.7"
 name = "rust_engine_3d_demo"
 
 [target.'cfg(target_os = "android")'.dependencies]
-ndk-glue = "0.2"
+ndk-glue = "0.7.0"
 
 [package.metadata.android]
 apk_label = "RustEngine3D"

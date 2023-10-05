@@ -1,10 +1,10 @@
 use nalgebra::Vector2;
+use rust_engine_3d::scene::ui::{Widget, WidgetDefault};
+use rust_engine_3d::utilities::system::{ptr_as_mut, ptr_as_ref};
 
 use crate::game_module::game_client::GameClient;
 use crate::game_module::ui_widgets::hud::{CrossHair, PlayerHud, SelectionArea, TargetHud};
 use crate::renderer::project_ui::ProjectUIManager;
-use rust_engine_3d::scene::ui::{Widget, WidgetDefault};
-use rust_engine_3d::utilities::system::{ptr_as_mut, ptr_as_ref};
 
 pub struct GameUIManager {
     pub _game_client: *const GameClient,
@@ -63,7 +63,7 @@ impl GameUIManager {
         ));
         self._player_hud = Some(PlayerHud::create_player_hud(
             game_ui_layout_mut,
-            &Vector2::new(window_size.x as f32 - 200.0, window_center.y as f32),
+            &Vector2::new(window_size.x as f32 - 200.0, window_center.y),
         ));
         self._selection_area = Some(SelectionArea::create_selection_area(
             game_ui_layout_mut,

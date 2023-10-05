@@ -1,10 +1,10 @@
 use nalgebra::Vector2;
 use rust_engine_3d::application::application::EngineApplication;
-use rust_engine_3d::scene::scene_manager::{ProjectSceneManagerBase, SceneManager};
 use rust_engine_3d::effect::effect_manager::EffectManager;
 use rust_engine_3d::renderer::renderer_context::RendererContext;
 use rust_engine_3d::renderer::renderer_data::RendererData;
 use rust_engine_3d::resource::resource::EngineResources;
+use rust_engine_3d::scene::scene_manager::{ProjectSceneManagerBase, SceneManager};
 use rust_engine_3d::utilities::system::{ptr_as_mut, ptr_as_ref};
 
 pub struct ProjectSceneManager {
