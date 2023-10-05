@@ -1,10 +1,10 @@
-use nalgebra::{ Vector2 };
+use nalgebra::Vector2;
 
-use rust_engine_3d::renderer::ui::{Widget, WidgetDefault};
-use rust_engine_3d::utilities::system::{ptr_as_ref, ptr_as_mut};
 use crate::game_module::game_client::GameClient;
-use crate::game_module::ui_widgets::hud::{CrossHair, TargetHud, PlayerHud, SelectionArea};
+use crate::game_module::ui_widgets::hud::{CrossHair, PlayerHud, SelectionArea, TargetHud};
 use crate::renderer::project_ui::ProjectUIManager;
+use rust_engine_3d::scene::ui::{Widget, WidgetDefault};
+use rust_engine_3d::utilities::system::{ptr_as_mut, ptr_as_ref};
 
 pub struct GameUIManager {
     pub _game_client: *const GameClient,
@@ -12,7 +12,7 @@ pub struct GameUIManager {
     pub _crosshair: Option<CrossHair>,
     pub _target_hud: Option<TargetHud>,
     pub _player_hud: Option<PlayerHud>,
-    pub _selection_area: Option<Box<SelectionArea>>
+    pub _selection_area: Option<Box<SelectionArea>>,
 }
 
 impl GameUIManager {
@@ -27,34 +27,63 @@ impl GameUIManager {
         })
     }
 
-    pub fn get_project_ui_manager(&self) -> &ProjectUIManager { ptr_as_ref(self._project_ui_manager) }
-    pub fn get_project_ui_manager_mut(&self) -> &mut ProjectUIManager { ptr_as_mut(self._project_ui_manager) }
-    pub fn get_game_client(&self) -> &GameClient { ptr_as_ref(self._game_client) }
-    pub fn get_game_client_mut(&self) -> &mut GameClient { ptr_as_mut(self._game_client) }
+    pub fn get_project_ui_manager(&self) -> &ProjectUIManager {
+        ptr_as_ref(self._project_ui_manager)
+    }
+    pub fn get_project_ui_manager_mut(&self) -> &mut ProjectUIManager {
+        ptr_as_mut(self._project_ui_manager)
+    }
+    pub fn get_game_client(&self) -> &GameClient {
+        ptr_as_ref(self._game_client)
+    }
+    pub fn get_game_client_mut(&self) -> &mut GameClient {
+        ptr_as_mut(self._game_client)
+    }
     pub fn initialize_game_ui_manager(&mut self, game_client: &GameClient) {
         self._game_client = game_client;
         self._project_ui_manager = game_client.get_project_ui_manager();
 
         let project_resources = game_client.get_project_resources();
         let game_ui_layout_mut = ptr_as_mut(game_client.get_project_ui_manager().game_ui_layout());
-        let window_size = &game_client.get_project_application().get_engine_application()._window_size;
-        let window_center = Vector2::<f32>::new(window_size.x as f32 * 0.5, window_size.y as f32 * 0.5,);
+        let window_size = &game_client
+            .get_project_application()
+            .get_engine_application()
+            ._window_size;
+        let window_center =
+            Vector2::<f32>::new(window_size.x as f32 * 0.5, window_size.y as f32 * 0.5);
 
-        self._crosshair = Some(CrossHair::create_crosshair(project_resources, game_ui_layout_mut, &window_center));
-        self._target_hud = Some(TargetHud::create_target_hud(game_ui_layout_mut, &window_center));
-        self._player_hud = Some(PlayerHud::create_player_hud(game_ui_layout_mut, &Vector2::new(window_size.x as f32 - 200.0, window_center.y as f32)));
-        self._selection_area = Some(SelectionArea::create_selection_area(game_ui_layout_mut, window_size));
+        self._crosshair = Some(CrossHair::create_crosshair(
+            project_resources,
+            game_ui_layout_mut,
+            &window_center,
+        ));
+        self._target_hud = Some(TargetHud::create_target_hud(
+            game_ui_layout_mut,
+            &window_center,
+        ));
+        self._player_hud = Some(PlayerHud::create_player_hud(
+            game_ui_layout_mut,
+            &Vector2::new(window_size.x as f32 - 200.0, window_center.y as f32),
+        ));
+        self._selection_area = Some(SelectionArea::create_selection_area(
+            game_ui_layout_mut,
+            window_size,
+        ));
     }
 
-    pub fn destroy_game_ui_manager(&mut self) {
-    }
+    pub fn destroy_game_ui_manager(&mut self) {}
 
     pub fn get_crosshair_widget_mut(&mut self) -> &mut WidgetDefault {
         ptr_as_mut(self._crosshair.as_ref().unwrap()._widget)
     }
 
     pub fn show_selection_area(&mut self, show: bool) {
-        let selection_area_widget = self._selection_area.as_ref().unwrap()._selection_area_layout.as_ref();
+        let selection_area_widget = self
+            ._selection_area
+            .as_ref()
+            .unwrap()
+            ._selection_area_layout
+            .as_ref();
         let ui_component = ptr_as_mut(selection_area_widget.get_ui_component());
         ui_component.set_visible(show);
     }
@@ -74,7 +103,10 @@ impl GameUIManager {
 
     pub fn update_game_ui(&mut self, _delta_time: f32) {
         let game_client = ptr_as_ref(self._game_client);
-        let window_size = &game_client.get_project_application().get_engine_application()._window_size;
+        let window_size = &game_client
+            .get_project_application()
+            .get_engine_application()
+            ._window_size;
 
         // Cross Hair
         let crosshair = self._crosshair.as_ref().unwrap();

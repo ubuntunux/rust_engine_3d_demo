@@ -1,7 +1,7 @@
 // use nalgebra::{ Vector2 };
 //
 // use rust_engine_3d::vulkan_context::vulkan_context::get_color32;
-// use rust_engine_3d::renderer::ui::{
+// use rust_engine_3d::scene::ui::{
 //     ProjectUIManagerBase,
 //     UIManager, Widget,
 //     UIWidgetTypes,

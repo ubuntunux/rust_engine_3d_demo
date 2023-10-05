@@ -2,14 +2,13 @@ use std::os::raw::c_void;
 
 use nalgebra::Vector2;
 
-use rust_engine_3d::renderer::ui::*;
-use rust_engine_3d::resource::resource::ProjectResourcesBase;
-use rust_engine_3d::vulkan_context::vulkan_context::get_color32;
-use crate::game_module::ui_widgets::hit_point_widgets::{ShieldPointWidget, HullPointWidget};
+use crate::game_module::ui_widgets::hit_point_widgets::{HullPointWidget, ShieldPointWidget};
 use crate::resource::project_resource::ProjectResources;
+use rust_engine_3d::scene::ui::*;
+use rust_engine_3d::resource::resource::ProjectResourcesBase;
 use rust_engine_3d::utilities::system::{ptr_as_mut, ptr_as_ref};
+use rust_engine_3d::vulkan_context::vulkan_context::get_color32;
 use std::rc::Rc;
-
 
 pub struct TargetHud {
     pub _widget: *const WidgetDefault,
@@ -38,13 +37,21 @@ pub struct SelectionArea {
 
 // CrossHair
 impl CrossHair {
-    pub fn create_crosshair(project_resources: &ProjectResources, root_widget: &mut dyn Widget, window_center: &Vector2<f32>) -> CrossHair {
+    pub fn create_crosshair(
+        project_resources: &ProjectResources,
+        root_widget: &mut dyn Widget,
+        window_center: &Vector2<f32>,
+    ) -> CrossHair {
         let crosshair_widget = UIManager::create_widget("cursor", UIWidgetTypes::Default);
         let ui_component = ptr_as_mut(crosshair_widget.as_ref()).get_ui_component_mut();
         let ui_size = 50.0f32;
-        ui_component.set_pos(window_center.x - ui_size * 0.5, window_center.y - ui_size * 0.5);
+        ui_component.set_pos(
+            window_center.x - ui_size * 0.5,
+            window_center.y - ui_size * 0.5,
+        );
         ui_component.set_size(ui_size, ui_size);
-        ui_component.set_material_instance(&project_resources.get_material_instance_data("ui/crosshair"));
+        ui_component
+            .set_material_instance(&project_resources.get_material_instance_data("ui/crosshair"));
         root_widget.add_widget(&crosshair_widget);
 
         CrossHair {
@@ -96,8 +103,12 @@ impl TargetHud {
         TargetHud {
             _widget: target_widget.as_ref() as *const dyn Widget as *const WidgetDefault,
             _distance: target_distance.as_ref() as *const dyn Widget as *const WidgetDefault,
-            _hull_point_widget: HullPointWidget::create_hull_point_widget(ptr_as_mut(target_widget.as_ref())),
-            _shield_point_widget: ShieldPointWidget::create_shield_point_widget(ptr_as_mut(target_widget.as_ref()))
+            _hull_point_widget: HullPointWidget::create_hull_point_widget(ptr_as_mut(
+                target_widget.as_ref(),
+            )),
+            _shield_point_widget: ShieldPointWidget::create_shield_point_widget(ptr_as_mut(
+                target_widget.as_ref(),
+            )),
         }
     }
 }
@@ -124,17 +135,24 @@ impl PlayerHud {
 
         PlayerHud {
             _widget: player_widget.as_ref() as *const dyn Widget as *const WidgetDefault,
-            _hull_point_widget: HullPointWidget::create_hull_point_widget(ptr_as_mut(player_widget.as_ref())),
-            _shield_point_widget: ShieldPointWidget::create_shield_point_widget(ptr_as_mut(player_widget.as_ref())),
+            _hull_point_widget: HullPointWidget::create_hull_point_widget(ptr_as_mut(
+                player_widget.as_ref(),
+            )),
+            _shield_point_widget: ShieldPointWidget::create_shield_point_widget(ptr_as_mut(
+                player_widget.as_ref(),
+            )),
         }
     }
 }
 
-
 // Selection Area
 impl SelectionArea {
-    pub fn create_selection_area(root_widget: &mut dyn Widget, window_size: &Vector2<i32>) -> Box<SelectionArea> {
-        let selection_area_layout = UIManager::create_widget("selection_area_layout", UIWidgetTypes::Default);
+    pub fn create_selection_area(
+        root_widget: &mut dyn Widget,
+        window_size: &Vector2<i32>,
+    ) -> Box<SelectionArea> {
+        let selection_area_layout =
+            UIManager::create_widget("selection_area_layout", UIWidgetTypes::Default);
         let layout_ui_component = ptr_as_mut(selection_area_layout.as_ref()).get_ui_component_mut();
         layout_ui_component.set_size(window_size.x as f32 - 200.0, window_size.y as f32 - 200.0);
         layout_ui_component.set_pos(0.0, 0.0);
@@ -150,7 +168,8 @@ impl SelectionArea {
         layout_ui_component.set_callback_touch_up(&TOUCH_UP);
         root_widget.add_widget(&selection_area_layout);
 
-        let selection_widget = UIManager::create_widget("selection_area_widget", UIWidgetTypes::Default);
+        let selection_widget =
+            UIManager::create_widget("selection_area_widget", UIWidgetTypes::Default);
         let ui_component = ptr_as_mut(selection_widget.as_ref()).get_ui_component_mut();
         ui_component.set_color(get_color32(255, 255, 0, 128));
         ui_component.set_border_color(get_color32(255, 255, 0, 255));
@@ -167,12 +186,17 @@ impl SelectionArea {
         });
 
         // set user data
-        layout_ui_component.set_user_data(selection_area.as_ref() as *const SelectionArea as *const c_void);
+        layout_ui_component
+            .set_user_data(selection_area.as_ref() as *const SelectionArea as *const c_void);
 
         selection_area
     }
 
-    pub fn touch_down(ui_component: &mut UIComponentInstance, touched_pos: &Vector2<f32>, _touched_pos_delta: &Vector2<f32>) -> bool {
+    pub fn touch_down(
+        ui_component: &mut UIComponentInstance,
+        touched_pos: &Vector2<f32>,
+        _touched_pos_delta: &Vector2<f32>,
+    ) -> bool {
         let selection_area = ptr_as_ref(ui_component.get_user_data() as *const SelectionArea);
         let selection_widget = selection_area._selection_widget.as_ref();
         let selection_ui_component = ptr_as_mut(selection_widget).get_ui_component_mut();
@@ -182,7 +206,11 @@ impl SelectionArea {
         true
     }
 
-    pub fn touch_move(ui_component: &mut UIComponentInstance, touched_pos: &Vector2<f32>, _touched_pos_delta: &Vector2<f32>) -> bool {
+    pub fn touch_move(
+        ui_component: &mut UIComponentInstance,
+        touched_pos: &Vector2<f32>,
+        _touched_pos_delta: &Vector2<f32>,
+    ) -> bool {
         let touch_start_pos: &Vector2<f32> = ui_component.get_touch_start_pos();
         let size: Vector2<f32> = touch_start_pos - touched_pos;
 
@@ -195,7 +223,11 @@ impl SelectionArea {
         true
     }
 
-    pub fn touch_up(ui_component: &mut UIComponentInstance, touched_pos: &Vector2<f32>, _touched_pos_delta: &Vector2<f32>) -> bool {
+    pub fn touch_up(
+        ui_component: &mut UIComponentInstance,
+        touched_pos: &Vector2<f32>,
+        _touched_pos_delta: &Vector2<f32>,
+    ) -> bool {
         let selection_area = ptr_as_ref(ui_component.get_user_data() as *const SelectionArea);
         let selection_widget = selection_area._selection_widget.as_ref();
         let selection_ui_component = ptr_as_mut(selection_widget).get_ui_component_mut();

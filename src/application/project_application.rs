@@ -4,23 +4,20 @@ use nalgebra::Vector2;
 use ash::vk;
 use winit::event::VirtualKeyCode;
 
-use rust_engine_3d::constants;
-use rust_engine_3d::application::application::{
-    self,
-    ProjectApplicationBase,
-    EngineApplication,
-    WindowMode
-};
-use rust_engine_3d::application::audio_manager::AudioManager;
-use rust_engine_3d::effect::effect_manager::EffectManager;
-use rust_engine_3d::renderer::renderer_data::RendererData;
-use rust_engine_3d::renderer::ui::ProjectUIManagerBase;
-use rust_engine_3d::utilities::system::{ptr_as_ref, ptr_as_mut};
-use crate::application_constants;
 use crate::application::project_scene_manager::ProjectSceneManager;
+use crate::application_constants;
 use crate::game_module::game_client::GameClient;
 use crate::renderer::project_ui::ProjectUIManager;
 use crate::resource::project_resource::ProjectResources;
+use rust_engine_3d::application::application::{
+    self, EngineApplication, ProjectApplicationBase, WindowMode,
+};
+use rust_engine_3d::audio::audio_manager::AudioManager;
+use rust_engine_3d::constants;
+use rust_engine_3d::effect::effect_manager::EffectManager;
+use rust_engine_3d::renderer::renderer_data::RendererData;
+use rust_engine_3d::scene::ui::ProjectUIManagerBase;
+use rust_engine_3d::utilities::system::{ptr_as_mut, ptr_as_ref};
 
 pub struct ProjectApplication {
     pub _engine_application: *const EngineApplication,
@@ -31,23 +28,30 @@ pub struct ProjectApplication {
     pub _project_scene_manager: Box<ProjectSceneManager>,
     pub _project_ui_manager: Box<ProjectUIManager>,
     pub _game_client: Box<GameClient>,
-    pub _is_game_mode: bool
+    pub _is_game_mode: bool,
 }
 
 impl ProjectApplicationBase for ProjectApplication {
-    fn initialize_project_application(&mut self, engine_application: &EngineApplication, window_size: &Vector2<i32>) {
+    fn initialize_project_application(
+        &mut self,
+        engine_application: &EngineApplication,
+        window_size: &Vector2<i32>,
+    ) {
         self._engine_application = engine_application;
         self._audio_manager = engine_application.get_audio_manager();
         self._effect_manager = engine_application.get_effect_manager();
-        self._renderer_data = engine_application.get_renderer_context().get_renderer_data();
+        self._renderer_data = engine_application
+            .get_renderer_context()
+            .get_renderer_data();
 
-        self.get_project_scene_manager_mut().initialize_project_scene_manager(
-            engine_application.get_scene_manager_mut(),
-            engine_application.get_renderer_context(),
-            engine_application.get_effect_manager(),
-            engine_application.get_engine_resources(),
-            window_size
-        );
+        self.get_project_scene_manager_mut()
+            .initialize_project_scene_manager(
+                engine_application.get_scene_manager_mut(),
+                engine_application.get_renderer_context(),
+                engine_application.get_effect_manager(),
+                engine_application.get_engine_resources(),
+                window_size,
+            );
         self.get_game_client_mut().initialize_game_client(self);
 
         // start game
@@ -65,7 +69,11 @@ impl ProjectApplicationBase for ProjectApplication {
     }
 
     fn update_event(&mut self) {
-        if self.get_engine_application()._keyboard_input_data.get_key_pressed(VirtualKeyCode::Tab) {
+        if self
+            .get_engine_application()
+            ._keyboard_input_data
+            .get_key_pressed(VirtualKeyCode::Tab)
+        {
             self.toggle_game_mode();
         }
 
@@ -82,8 +90,12 @@ impl ProjectApplicationBase for ProjectApplication {
             const MOUSE_DELTA_RATIO: f32 = 500.0;
             let delta_time = time_data._delta_time;
             let _mouse_pos = &mouse_move_data._mouse_pos;
-            let mouse_delta_x = mouse_move_data._mouse_pos_delta.x as f32 / engine_application._window_size.x as f32 * MOUSE_DELTA_RATIO;
-            let mouse_delta_y = mouse_move_data._mouse_pos_delta.y as f32 / engine_application._window_size.y as f32 * MOUSE_DELTA_RATIO;
+            let mouse_delta_x = mouse_move_data._mouse_pos_delta.x as f32
+                / engine_application._window_size.x as f32
+                * MOUSE_DELTA_RATIO;
+            let mouse_delta_y = mouse_move_data._mouse_pos_delta.y as f32
+                / engine_application._window_size.y as f32
+                * MOUSE_DELTA_RATIO;
             let btn_left: bool = mouse_input_data._btn_l_hold;
             let btn_right: bool = mouse_input_data._btn_r_hold;
             let btn_r_pressed: bool = mouse_input_data._btn_r_pressed;
@@ -106,8 +118,10 @@ impl ProjectApplicationBase for ProjectApplication {
             let pressed_key_c = keyboard_input_data.get_key_hold(VirtualKeyCode::C);
             let pressed_key_comma = keyboard_input_data.get_key_hold(VirtualKeyCode::Comma);
             let pressed_key_period = keyboard_input_data.get_key_hold(VirtualKeyCode::Period);
-            let released_key_left_bracket = keyboard_input_data.get_key_released(VirtualKeyCode::LBracket);
-            let released_key_right_bracket = keyboard_input_data.get_key_released(VirtualKeyCode::RBracket);
+            let released_key_left_bracket =
+                keyboard_input_data.get_key_released(VirtualKeyCode::LBracket);
+            let released_key_right_bracket =
+                keyboard_input_data.get_key_released(VirtualKeyCode::RBracket);
             let released_key_subtract = keyboard_input_data.get_key_released(VirtualKeyCode::Minus);
             let released_key_equals = keyboard_input_data.get_key_released(VirtualKeyCode::Equals);
             let modifier_keys_shift = keyboard_input_data.get_key_hold(VirtualKeyCode::LShift);
@@ -116,7 +130,9 @@ impl ProjectApplicationBase for ProjectApplication {
             let main_camera = scene_manager.get_main_camera_mut();
             let mut main_light = scene_manager._main_light.borrow_mut();
             let camera_move_speed_multiplier = if modifier_keys_shift { 2.0 } else { 1.0 };
-            let move_speed: f32 = application_constants::CAMERA_MOVE_SPEED * camera_move_speed_multiplier * delta_time as f32;
+            let move_speed: f32 = application_constants::CAMERA_MOVE_SPEED
+                * camera_move_speed_multiplier
+                * delta_time as f32;
             let pan_speed = application_constants::CAMERA_PAN_SPEED * camera_move_speed_multiplier;
             let rotation_speed = application_constants::CAMERA_ROTATION_SPEED;
 
@@ -127,9 +143,11 @@ impl ProjectApplicationBase for ProjectApplication {
             }
 
             if released_key_subtract {
-                self.get_renderer_data_mut().prev_debug_render_target_miplevel();
+                self.get_renderer_data_mut()
+                    .prev_debug_render_target_miplevel();
             } else if released_key_equals {
-                self.get_renderer_data_mut().next_debug_render_target_miplevel();
+                self.get_renderer_data_mut()
+                    .next_debug_render_target_miplevel();
             }
 
             if pressed_key_comma {
@@ -139,39 +157,46 @@ impl ProjectApplicationBase for ProjectApplication {
             }
 
             if btn_left && btn_right {
-                main_camera._transform_object.move_right(pan_speed * mouse_delta_x as f32);
-                main_camera._transform_object.move_up(-pan_speed * mouse_delta_y as f32);
-            }
-            else if btn_right {
-                main_camera._transform_object.rotation_pitch(rotation_speed * mouse_delta_y as f32);
-                main_camera._transform_object.rotation_yaw(rotation_speed * mouse_delta_x as f32);
+                main_camera
+                    ._transform_object
+                    .move_right(pan_speed * mouse_delta_x as f32);
+                main_camera
+                    ._transform_object
+                    .move_up(-pan_speed * mouse_delta_y as f32);
+            } else if btn_right {
+                main_camera
+                    ._transform_object
+                    .rotation_pitch(rotation_speed * mouse_delta_y as f32);
+                main_camera
+                    ._transform_object
+                    .rotation_yaw(rotation_speed * mouse_delta_x as f32);
             }
 
             if pressed_key_z {
-                main_camera._transform_object.rotation_roll(-rotation_speed * delta_time as f32 * 100.0);
-            }
-            else if pressed_key_c {
-                main_camera._transform_object.rotation_roll(rotation_speed * delta_time as f32 * 100.0);
+                main_camera
+                    ._transform_object
+                    .rotation_roll(-rotation_speed * delta_time as f32 * 100.0);
+            } else if pressed_key_c {
+                main_camera
+                    ._transform_object
+                    .rotation_roll(rotation_speed * delta_time as f32 * 100.0);
             }
 
             if pressed_key_w {
                 main_camera._transform_object.move_front(move_speed);
-            }
-            else if pressed_key_s {
+            } else if pressed_key_s {
                 main_camera._transform_object.move_front(-move_speed);
             }
 
             if pressed_key_a {
                 main_camera._transform_object.move_right(-move_speed);
-            }
-            else if pressed_key_d {
+            } else if pressed_key_d {
                 main_camera._transform_object.move_right(move_speed);
             }
 
             if pressed_key_q {
                 main_camera._transform_object.move_up(-move_speed);
-            }
-            else if pressed_key_e {
+            } else if pressed_key_e {
                 main_camera._transform_object.move_up(move_speed);
             }
         }
@@ -186,33 +211,70 @@ impl ProjectApplicationBase for ProjectApplication {
             self._game_client.update_game_client(delta_time as f32);
         }
 
-        self._project_scene_manager.update_project_scene_manager(engine_application, delta_time);
-        self._project_ui_manager.update_ui_manager(engine_application, delta_time);
+        self._project_scene_manager
+            .update_project_scene_manager(engine_application, delta_time);
+        self._project_ui_manager
+            .update_ui_manager(engine_application, delta_time);
     }
 }
 
 impl ProjectApplication {
-    pub fn get_engine_application(&self) -> &EngineApplication { ptr_as_ref(self._engine_application) }
-    pub fn get_engine_application_mut(&self) -> &mut EngineApplication { ptr_as_mut(self._engine_application) }
-    pub fn get_effect_manager(&self) -> &EffectManager { ptr_as_ref(self._effect_manager) }
-    pub fn get_effect_manager_mut(&self) -> &mut EffectManager { ptr_as_mut(self._effect_manager) }
-    pub fn get_project_resources(&self) -> &ProjectResources { ptr_as_ref(self._project_resources.as_ref()) }
-    pub fn get_project_resources_mut(&self) -> &mut ProjectResources { ptr_as_mut(self._project_resources.as_ref()) }
-    pub fn get_project_scene_manager(&self) -> &ProjectSceneManager { ptr_as_ref(self._project_scene_manager.as_ref()) }
-    pub fn get_project_scene_manager_mut(&self) -> &mut ProjectSceneManager { ptr_as_mut(self._project_scene_manager.as_ref()) }
-    pub fn get_renderer_data(&self) -> &RendererData { ptr_as_ref(self._renderer_data) }
-    pub fn get_renderer_data_mut(&self) -> &mut RendererData { ptr_as_mut(self._renderer_data) }
-    pub fn get_project_ui_manager(&self) -> &ProjectUIManager { ptr_as_ref(self._project_ui_manager.as_ref()) }
-    pub fn get_project_ui_manager_mut(&self) -> &mut ProjectUIManager { ptr_as_mut(self._project_ui_manager.as_ref()) }
-    pub fn get_audio_manager(&self) -> &AudioManager { ptr_as_ref(self._audio_manager) }
-    pub fn get_audio_manager_mut(&self) -> &mut AudioManager { ptr_as_mut(self._audio_manager) }
-    pub fn get_game_client(&self) -> &GameClient { ptr_as_ref(self._game_client.as_ref()) }
-    pub fn get_game_client_mut(&self) -> &mut GameClient { ptr_as_mut(self._game_client.as_ref()) }
-    pub fn toggle_game_mode(&mut self) { self.set_game_mode(!self._is_game_mode); }
+    pub fn get_engine_application(&self) -> &EngineApplication {
+        ptr_as_ref(self._engine_application)
+    }
+    pub fn get_engine_application_mut(&self) -> &mut EngineApplication {
+        ptr_as_mut(self._engine_application)
+    }
+    pub fn get_effect_manager(&self) -> &EffectManager {
+        ptr_as_ref(self._effect_manager)
+    }
+    pub fn get_effect_manager_mut(&self) -> &mut EffectManager {
+        ptr_as_mut(self._effect_manager)
+    }
+    pub fn get_project_resources(&self) -> &ProjectResources {
+        ptr_as_ref(self._project_resources.as_ref())
+    }
+    pub fn get_project_resources_mut(&self) -> &mut ProjectResources {
+        ptr_as_mut(self._project_resources.as_ref())
+    }
+    pub fn get_project_scene_manager(&self) -> &ProjectSceneManager {
+        ptr_as_ref(self._project_scene_manager.as_ref())
+    }
+    pub fn get_project_scene_manager_mut(&self) -> &mut ProjectSceneManager {
+        ptr_as_mut(self._project_scene_manager.as_ref())
+    }
+    pub fn get_renderer_data(&self) -> &RendererData {
+        ptr_as_ref(self._renderer_data)
+    }
+    pub fn get_renderer_data_mut(&self) -> &mut RendererData {
+        ptr_as_mut(self._renderer_data)
+    }
+    pub fn get_project_ui_manager(&self) -> &ProjectUIManager {
+        ptr_as_ref(self._project_ui_manager.as_ref())
+    }
+    pub fn get_project_ui_manager_mut(&self) -> &mut ProjectUIManager {
+        ptr_as_mut(self._project_ui_manager.as_ref())
+    }
+    pub fn get_audio_manager(&self) -> &AudioManager {
+        ptr_as_ref(self._audio_manager)
+    }
+    pub fn get_audio_manager_mut(&self) -> &mut AudioManager {
+        ptr_as_mut(self._audio_manager)
+    }
+    pub fn get_game_client(&self) -> &GameClient {
+        ptr_as_ref(self._game_client.as_ref())
+    }
+    pub fn get_game_client_mut(&self) -> &mut GameClient {
+        ptr_as_mut(self._game_client.as_ref())
+    }
+    pub fn toggle_game_mode(&mut self) {
+        self.set_game_mode(!self._is_game_mode);
+    }
     pub fn set_game_mode(&mut self, is_game_mode: bool) {
         self._is_game_mode = is_game_mode;
         self.get_game_client_mut().set_game_mode(is_game_mode);
-        self.get_engine_application_mut().set_grab_mode(is_game_mode);
+        self.get_engine_application_mut()
+            .set_grab_mode(is_game_mode);
     }
 }
 
@@ -309,6 +371,6 @@ pub fn run_project_application() {
         &application,
         application.get_project_resources(),
         application.get_project_scene_manager(),
-        application.get_project_ui_manager()
+        application.get_project_ui_manager(),
     );
 }

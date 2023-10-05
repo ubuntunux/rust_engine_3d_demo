@@ -1,6 +1,8 @@
-use rust_engine_3d::vulkan_context::vulkan_context::get_color32;
-use rust_engine_3d::renderer::ui::{UIManager, Widget, UIWidgetTypes, HorizontalAlign, VerticalAlign, UILayoutType, WidgetDefault};
+use rust_engine_3d::scene::ui::{
+    HorizontalAlign, UILayoutType, UIManager, UIWidgetTypes, VerticalAlign, Widget, WidgetDefault,
+};
 use rust_engine_3d::utilities::system::ptr_as_mut;
+use rust_engine_3d::vulkan_context::vulkan_context::get_color32;
 
 const WIDGET_UI_WIDTH: f32 = 120.0;
 const WIDGET_UI_HEIGHT: f32 = 24.0;
@@ -16,7 +18,6 @@ pub struct ShieldPointWidget {
     pub _shield_point_layer: *const WidgetDefault,
     pub _shield_point_bar: *const WidgetDefault,
 }
-
 
 // Implementation
 fn create_hit_point_layer_widget(parent_widget: &mut dyn Widget) -> *const WidgetDefault {
@@ -54,10 +55,11 @@ fn create_hit_point_bar_widget(parent_widget: &mut dyn Widget, color: u32) -> *c
 impl HullPointWidget {
     pub fn create_hull_point_widget(parent_widget: &mut dyn Widget) -> HullPointWidget {
         let hull_point_layer = create_hit_point_layer_widget(parent_widget);
-        let hull_point_bar = create_hit_point_bar_widget(ptr_as_mut(hull_point_layer), get_color32(255, 75, 0, 75));
+        let hull_point_bar =
+            create_hit_point_bar_widget(ptr_as_mut(hull_point_layer), get_color32(255, 75, 0, 75));
         HullPointWidget {
             _hull_point_layer: hull_point_layer,
-            _hull_point_bar: hull_point_bar
+            _hull_point_bar: hull_point_bar,
         }
     }
 
@@ -73,10 +75,13 @@ impl HullPointWidget {
 impl ShieldPointWidget {
     pub fn create_shield_point_widget(parent_widget: &mut dyn Widget) -> ShieldPointWidget {
         let shield_point_layer = create_hit_point_layer_widget(parent_widget);
-        let shield_point_bar = create_hit_point_bar_widget(ptr_as_mut(shield_point_layer), get_color32(75, 75, 255, 75));
+        let shield_point_bar = create_hit_point_bar_widget(
+            ptr_as_mut(shield_point_layer),
+            get_color32(75, 75, 255, 75),
+        );
         ShieldPointWidget {
             _shield_point_layer: shield_point_layer,
-            _shield_point_bar: shield_point_bar
+            _shield_point_bar: shield_point_bar,
         }
     }
 

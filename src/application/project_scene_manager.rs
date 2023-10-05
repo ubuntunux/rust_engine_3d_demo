@@ -1,6 +1,6 @@
 use nalgebra::Vector2;
-use rust_engine_3d::application::application::{EngineApplication};
-use rust_engine_3d::application::scene_manager::{ProjectSceneManagerBase, SceneManager};
+use rust_engine_3d::application::application::EngineApplication;
+use rust_engine_3d::scene::scene_manager::{ProjectSceneManagerBase, SceneManager};
 use rust_engine_3d::effect::effect_manager::EffectManager;
 use rust_engine_3d::renderer::renderer_context::RendererContext;
 use rust_engine_3d::renderer::renderer_data::RendererData;
@@ -14,13 +14,15 @@ pub struct ProjectSceneManager {
     pub _effect_manager: *const EffectManager,
 }
 
-impl ProjectSceneManagerBase for ProjectSceneManager {
-
-}
+impl ProjectSceneManagerBase for ProjectSceneManager {}
 
 impl ProjectSceneManager {
-    pub fn get_scene_manager(&self) -> &SceneManager { ptr_as_ref(self._scene_manager) }
-    pub fn get_scene_manager_mut(&self) -> &mut SceneManager { ptr_as_mut(self._scene_manager) }
+    pub fn get_scene_manager(&self) -> &SceneManager {
+        ptr_as_ref(self._scene_manager)
+    }
+    pub fn get_scene_manager_mut(&self) -> &mut SceneManager {
+        ptr_as_mut(self._scene_manager)
+    }
 
     pub fn create_project_scene_manager() -> Box<ProjectSceneManager> {
         Box::new(ProjectSceneManager {
@@ -37,7 +39,7 @@ impl ProjectSceneManager {
         renderer_context: &RendererContext,
         effect_manager: &EffectManager,
         engine_resources: &EngineResources,
-        window_size: &Vector2<i32>
+        window_size: &Vector2<i32>,
     ) {
         self._scene_manager = scene_manager;
         self._renderer_data = renderer_context.get_renderer_data();
@@ -49,12 +51,13 @@ impl ProjectSceneManager {
             renderer_context,
             effect_manager,
             engine_resources,
-            window_size
+            window_size,
         )
     }
 
     pub fn open_scene_data(&mut self, scene_data_name: &str) {
-        self.get_scene_manager_mut().open_scene_data(scene_data_name);
+        self.get_scene_manager_mut()
+            .open_scene_data(scene_data_name);
     }
 
     pub fn close_scene_data(&mut self) {
@@ -65,7 +68,12 @@ impl ProjectSceneManager {
         self.get_scene_manager_mut().destroy_scene_manager();
     }
 
-    pub fn update_project_scene_manager(&mut self, engine_application: &EngineApplication, delta_time: f64) {
-        self.get_scene_manager_mut().update_scene_manager(engine_application, delta_time);
+    pub fn update_project_scene_manager(
+        &mut self,
+        engine_application: &EngineApplication,
+        delta_time: f64,
+    ) {
+        self.get_scene_manager_mut()
+            .update_scene_manager(engine_application, delta_time);
     }
 }

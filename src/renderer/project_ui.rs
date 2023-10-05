@@ -1,13 +1,16 @@
+use nalgebra::Vector2;
 use std::os::raw::c_void;
 use std::rc::Rc;
-use nalgebra::Vector2;
 
 use rust_engine_3d::application::application::EngineApplication;
-use rust_engine_3d::renderer::ui::{ProjectUIManagerBase, UIManager, UIWidgetTypes, Widget, WidgetDefault, CallbackTouchEvent, UIComponentInstance, HorizontalAlign, VerticalAlign};
 use rust_engine_3d::renderer::renderer_context::RendererContext;
+use rust_engine_3d::scene::ui::{
+    CallbackTouchEvent, HorizontalAlign, ProjectUIManagerBase, UIComponentInstance, UIManager,
+    UIWidgetTypes, VerticalAlign, Widget, WidgetDefault,
+};
 use rust_engine_3d::resource::resource::EngineResources;
-use rust_engine_3d::vulkan_context::vulkan_context::{ get_color32 };
 use rust_engine_3d::utilities::system::{ptr_as_mut, ptr_as_ref};
+use rust_engine_3d::vulkan_context::vulkan_context::get_color32;
 
 // Declaration
 pub struct ProjectUIManager {
@@ -19,13 +22,13 @@ pub struct ProjectUIManager {
 }
 
 pub struct UISwitch {
-    pub _ui_switch_widget: Rc<dyn Widget>
+    pub _ui_switch_widget: Rc<dyn Widget>,
 }
 
 pub struct UIWorldAxis {
     pub _widget_axis_x: Rc<dyn Widget>,
     pub _widget_axis_y: Rc<dyn Widget>,
-    pub _widget_axis_z: Rc<dyn Widget>
+    pub _widget_axis_z: Rc<dyn Widget>,
 }
 
 // Implementation
@@ -67,7 +70,11 @@ impl ProjectUIManagerBase for ProjectUIManager {
         self._root_widget = self.get_ui_manager().get_root_ptr();
     }
 
-    fn build_ui(&mut self, _renderer_context: &RendererContext, engine_resources: &EngineResources) {
+    fn build_ui(
+        &mut self,
+        _renderer_context: &RendererContext,
+        engine_resources: &EngineResources,
+    ) {
         let game_ui_layout = UIManager::create_widget("game ui layout", UIWidgetTypes::Default);
         let game_ui_layout_mut = ptr_as_mut(game_ui_layout.as_ref());
         let ui_component = game_ui_layout_mut.get_ui_component_mut();
@@ -80,9 +87,16 @@ impl ProjectUIManagerBase for ProjectUIManager {
         let root_widget_mut = ptr_as_mut(self._root_widget);
         root_widget_mut.add_widget(&game_ui_layout);
 
-        self._ui_switch = Some(UISwitch::create_ui_switch(engine_resources, root_widget_mut, game_ui_layout_mut));
+        self._ui_switch = Some(UISwitch::create_ui_switch(
+            engine_resources,
+            root_widget_mut,
+            game_ui_layout_mut,
+        ));
 
-        self._ui_world_axis = Some(UIWorldAxis::create_ui_world_axis(engine_resources, root_widget_mut));
+        self._ui_world_axis = Some(UIWorldAxis::create_ui_world_axis(
+            engine_resources,
+            root_widget_mut,
+        ));
     }
 
     fn update_ui_manager(&mut self, engine_application: &EngineApplication, _delta_time: f64) {
@@ -99,15 +113,18 @@ impl ProjectUIManagerBase for ProjectUIManager {
         let axis_z: Vector2<f32> = Vector2::new(camera_right.z, -camera_up.z) * size;
 
         let ui_world_axis = self._ui_world_axis.as_mut().unwrap();
-        let ui_component_x = ptr_as_mut(ui_world_axis._widget_axis_x.as_ref()).get_ui_component_mut();
+        let ui_component_x =
+            ptr_as_mut(ui_world_axis._widget_axis_x.as_ref()).get_ui_component_mut();
         ui_component_x.set_pos_x(start_pos_x + axis_x.x);
         ui_component_x.set_pos_y(start_pos_y + axis_x.y);
 
-        let ui_component_y = ptr_as_mut(ui_world_axis._widget_axis_y.as_ref()).get_ui_component_mut();
+        let ui_component_y =
+            ptr_as_mut(ui_world_axis._widget_axis_y.as_ref()).get_ui_component_mut();
         ui_component_y.set_pos_x(start_pos_x + axis_y.x);
         ui_component_y.set_pos_y(start_pos_y + axis_y.y);
 
-        let ui_component_z = ptr_as_mut(ui_world_axis._widget_axis_z.as_ref()).get_ui_component_mut();
+        let ui_component_z =
+            ptr_as_mut(ui_world_axis._widget_axis_z.as_ref()).get_ui_component_mut();
         ui_component_z.set_pos_x(start_pos_x + axis_z.x);
         ui_component_z.set_pos_y(start_pos_y + axis_z.y);
 
@@ -115,25 +132,29 @@ impl ProjectUIManagerBase for ProjectUIManager {
         debug_line_manager.add_debug_line_2d(
             &Vector2::new(start_pos_x, start_pos_y),
             &Vector2::new(start_pos_x + axis_x.x, start_pos_y + axis_x.y),
-            get_color32(255, 0, 0, 255)
+            get_color32(255, 0, 0, 255),
         );
 
         debug_line_manager.add_debug_line_2d(
             &Vector2::new(start_pos_x, start_pos_y),
             &Vector2::new(start_pos_x + axis_y.x, start_pos_y + axis_y.y),
-            get_color32(0, 255, 0, 255)
+            get_color32(0, 255, 0, 255),
         );
 
         debug_line_manager.add_debug_line_2d(
             &Vector2::new(start_pos_x, start_pos_y),
             &Vector2::new(start_pos_x + axis_z.x, start_pos_y + axis_z.y),
-            get_color32(0, 0, 255, 255)
+            get_color32(0, 0, 255, 255),
         );
     }
 }
 
 impl UISwitch {
-    pub fn create_ui_switch(_engine_resources: &EngineResources, root_widget: &mut dyn Widget, game_ui_widget: &dyn Widget) -> UISwitch {
+    pub fn create_ui_switch(
+        _engine_resources: &EngineResources,
+        root_widget: &mut dyn Widget,
+        game_ui_widget: &dyn Widget,
+    ) -> UISwitch {
         let ui_switch_widget = UIManager::create_widget("ui_switch", UIWidgetTypes::Default);
         let ui_component = ptr_as_mut(ui_switch_widget.as_ref()).get_ui_component_mut();
         ui_component.set_text("UI On/Off");
@@ -154,7 +175,9 @@ impl UISwitch {
 
         static TOUCH_DOWN: CallbackTouchEvent = UISwitch::touch_down;
         ui_component.set_callback_touch_down(&TOUCH_DOWN);
-        ui_component.set_user_data(game_ui_widget.get_ui_component() as *const UIComponentInstance as *const c_void);
+        ui_component.set_user_data(
+            game_ui_widget.get_ui_component() as *const UIComponentInstance as *const c_void,
+        );
         root_widget.add_widget(&ui_switch_widget);
 
         let ui_switch = UISwitch {
@@ -164,15 +187,23 @@ impl UISwitch {
         ui_switch
     }
 
-    pub fn touch_down(ui_component: &mut UIComponentInstance, _touched_pos: &Vector2<f32>, _touched_pos_delta: &Vector2<f32>) -> bool {
-        let game_ui_component = ptr_as_mut(ui_component.get_user_data() as *const UIComponentInstance);
+    pub fn touch_down(
+        ui_component: &mut UIComponentInstance,
+        _touched_pos: &Vector2<f32>,
+        _touched_pos_delta: &Vector2<f32>,
+    ) -> bool {
+        let game_ui_component =
+            ptr_as_mut(ui_component.get_user_data() as *const UIComponentInstance);
         game_ui_component.set_visible(!game_ui_component.get_visible());
         true
     }
 }
 
 impl UIWorldAxis {
-    pub fn create_ui_world_axis(_engine_resources: &EngineResources, root_widget: &mut dyn Widget) -> UIWorldAxis {
+    pub fn create_ui_world_axis(
+        _engine_resources: &EngineResources,
+        root_widget: &mut dyn Widget,
+    ) -> UIWorldAxis {
         let widget_axis_x = UIManager::create_widget("ui_axis_x", UIWidgetTypes::Default);
         let ui_component_axis_x = ptr_as_mut(widget_axis_x.as_ref()).get_ui_component_mut();
         ui_component_axis_x.set_text("X");

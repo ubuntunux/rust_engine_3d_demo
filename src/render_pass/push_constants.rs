@@ -1,9 +1,11 @@
-use std::fmt::Debug;
-use nalgebra::{Vector4};
-use serde::{Serialize, Deserialize};
-use serde_json;
-use rust_engine_3d::renderer::push_constants::{PushConstantParameter, PushConstant, PushConstantName};
+use nalgebra::Vector4;
+use rust_engine_3d::renderer::push_constants::{
+    PushConstant, PushConstantName, PushConstantParameter,
+};
 use rust_engine_3d::utilities::json::convert_json_value_to_push_constant_parameter;
+use serde::{Deserialize, Serialize};
+use serde_json;
+use std::fmt::Debug;
 
 #[repr(C)]
 #[allow(non_camel_case_types)]
@@ -14,7 +16,7 @@ pub struct PushConstant_RenderShip {
     pub _bone_count: u32,
     pub _reserved0: u32,
     pub _reserved1: u32,
-    pub _color: Vector4<f32>
+    pub _color: Vector4<f32>,
 }
 
 impl Default for PushConstant_RenderShip {
@@ -24,7 +26,7 @@ impl Default for PushConstant_RenderShip {
             _bone_count: 0,
             _reserved0: 0,
             _reserved1: 0,
-            _color: Vector4::new(1.0, 1.0, 1.0, 1.0)
+            _color: Vector4::new(1.0, 1.0, 1.0, 1.0),
         }
     }
 }
@@ -50,8 +52,13 @@ impl PushConstant for PushConstant_RenderShip {
         }
     }
 
-    fn update_material_parameters(&mut self, material_parameters: &serde_json::Map<String, serde_json::Value>) {
-        if let PushConstantParameter::Float4(value) = convert_json_value_to_push_constant_parameter(material_parameters, "_color") {
+    fn update_material_parameters(
+        &mut self,
+        material_parameters: &serde_json::Map<String, serde_json::Value>,
+    ) {
+        if let PushConstantParameter::Float4(value) =
+            convert_json_value_to_push_constant_parameter(material_parameters, "_color")
+        {
             self._color = value;
         }
     }

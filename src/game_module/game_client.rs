@@ -1,15 +1,14 @@
 use nalgebra::Vector2;
 
-use rust_engine_3d::application::audio_manager::AudioManager;
-use rust_engine_3d::effect::effect_manager::EffectManager;
-use rust_engine_3d::utilities::system::{ptr_as_ref, ptr_as_mut};
 use crate::application::project_application::ProjectApplication;
 use crate::application::project_scene_manager::ProjectSceneManager;
 use crate::game_module::game_controller::GameController;
 use crate::game_module::game_ui::GameUIManager;
-use crate::resource::project_resource::ProjectResources;
 use crate::renderer::project_ui::ProjectUIManager;
-
+use crate::resource::project_resource::ProjectResources;
+use rust_engine_3d::audio::audio_manager::AudioManager;
+use rust_engine_3d::effect::effect_manager::EffectManager;
+use rust_engine_3d::utilities::system::{ptr_as_mut, ptr_as_ref};
 
 pub struct GameClient {
     pub _project_application: *const ProjectApplication,
@@ -44,38 +43,75 @@ impl GameClient {
         self._project_ui_manager = project_application.get_project_ui_manager();
         self._audio_manager = project_application.get_audio_manager();
         self._effect_manager = project_application.get_effect_manager();
-        self._game_ui_manager.initialize_game_ui_manager(game_client);
-        self._game_controller.initialize_game_controller(game_client);
+        self._game_ui_manager
+            .initialize_game_ui_manager(game_client);
+        self._game_controller
+            .initialize_game_controller(game_client);
     }
 
     pub fn destroy_game_client(&mut self) {
         self._game_ui_manager.destroy_game_ui_manager();
     }
 
-    pub fn get_project_application(&self) -> &ProjectApplication { ptr_as_ref(self._project_application) }
-    pub fn get_project_application_mut(&self) -> &mut ProjectApplication { ptr_as_mut(self._project_application) }
-    pub fn get_project_scene_manager(&self) -> &ProjectSceneManager { ptr_as_ref(self._project_scene_manager) }
-    pub fn get_project_scene_manager_mut(&self) -> &mut ProjectSceneManager { ptr_as_mut(self._project_scene_manager) }
-    pub fn get_project_resources(&self) -> &ProjectResources { ptr_as_ref(self._project_resources) }
-    pub fn get_project_resources_mut(&self) -> &mut ProjectResources { ptr_as_mut(self._project_resources) }
-    pub fn get_project_ui_manager(&self) -> &ProjectUIManager { ptr_as_ref(self._project_ui_manager) }
-    pub fn get_project_ui_manager_mut(&self) -> &mut ProjectUIManager { ptr_as_mut(self._project_ui_manager) }
-    pub fn get_audio_manager(&self) -> &AudioManager { ptr_as_ref(self._audio_manager) }
-    pub fn get_audio_manager_mut(&self) -> &mut AudioManager { ptr_as_mut(self._audio_manager) }
-    pub fn get_effect_manager(&self) -> &EffectManager { ptr_as_ref(self._effect_manager) }
-    pub fn get_effect_manager_mut(&self) -> &mut EffectManager { ptr_as_mut(self._effect_manager) }
-    pub fn get_game_controller(&self) -> &GameController { ptr_as_ref(self._game_controller.as_ref()) }
-    pub fn get_game_controller_mut(&self) -> &mut GameController { ptr_as_mut(self._game_controller.as_ref()) }
-    pub fn get_game_ui_manager(&self) -> &GameUIManager { ptr_as_ref(self._game_ui_manager.as_ref()) }
-    pub fn get_game_ui_manager_mut(&self) -> &mut GameUIManager { ptr_as_mut(self._game_ui_manager.as_ref()) }
+    pub fn get_project_application(&self) -> &ProjectApplication {
+        ptr_as_ref(self._project_application)
+    }
+    pub fn get_project_application_mut(&self) -> &mut ProjectApplication {
+        ptr_as_mut(self._project_application)
+    }
+    pub fn get_project_scene_manager(&self) -> &ProjectSceneManager {
+        ptr_as_ref(self._project_scene_manager)
+    }
+    pub fn get_project_scene_manager_mut(&self) -> &mut ProjectSceneManager {
+        ptr_as_mut(self._project_scene_manager)
+    }
+    pub fn get_project_resources(&self) -> &ProjectResources {
+        ptr_as_ref(self._project_resources)
+    }
+    pub fn get_project_resources_mut(&self) -> &mut ProjectResources {
+        ptr_as_mut(self._project_resources)
+    }
+    pub fn get_project_ui_manager(&self) -> &ProjectUIManager {
+        ptr_as_ref(self._project_ui_manager)
+    }
+    pub fn get_project_ui_manager_mut(&self) -> &mut ProjectUIManager {
+        ptr_as_mut(self._project_ui_manager)
+    }
+    pub fn get_audio_manager(&self) -> &AudioManager {
+        ptr_as_ref(self._audio_manager)
+    }
+    pub fn get_audio_manager_mut(&self) -> &mut AudioManager {
+        ptr_as_mut(self._audio_manager)
+    }
+    pub fn get_effect_manager(&self) -> &EffectManager {
+        ptr_as_ref(self._effect_manager)
+    }
+    pub fn get_effect_manager_mut(&self) -> &mut EffectManager {
+        ptr_as_mut(self._effect_manager)
+    }
+    pub fn get_game_controller(&self) -> &GameController {
+        ptr_as_ref(self._game_controller.as_ref())
+    }
+    pub fn get_game_controller_mut(&self) -> &mut GameController {
+        ptr_as_mut(self._game_controller.as_ref())
+    }
+    pub fn get_game_ui_manager(&self) -> &GameUIManager {
+        ptr_as_ref(self._game_ui_manager.as_ref())
+    }
+    pub fn get_game_ui_manager_mut(&self) -> &mut GameUIManager {
+        ptr_as_mut(self._game_ui_manager.as_ref())
+    }
 
     pub fn start_game(&mut self) {
-        self.get_project_scene_manager_mut().open_scene_data("sponza");
+        self.get_project_scene_manager_mut()
+            .open_scene_data("sponza");
     }
 
     pub fn set_game_mode(&mut self, is_game_mode: bool) {
         let game_ui_layout_mut = ptr_as_mut(self.get_project_ui_manager().game_ui_layout());
-        game_ui_layout_mut.get_ui_component_mut().set_visible(is_game_mode);
+        game_ui_layout_mut
+            .get_ui_component_mut()
+            .set_visible(is_game_mode);
     }
 
     pub fn update_game_event(&mut self) {
@@ -88,7 +124,10 @@ impl GameClient {
         let mouse_input_data = &engine_application._mouse_input_data;
         let keyboard_input_data = &engine_application._keyboard_input_data;
         let mouse_speed_ratio = engine_application._window_size.y as f32 / 1080.0;
-        let mouse_delta: Vector2<f32> = Vector2::new(mouse_move_data._mouse_pos_delta.x as f32 / mouse_speed_ratio, mouse_move_data._mouse_pos_delta.y as f32 / mouse_speed_ratio);
+        let mouse_delta: Vector2<f32> = Vector2::new(
+            mouse_move_data._mouse_pos_delta.x as f32 / mouse_speed_ratio,
+            mouse_move_data._mouse_pos_delta.y as f32 / mouse_speed_ratio,
+        );
         let _scroll_delta = &mouse_move_data._scroll_delta;
 
         let main_camera = scene_manager.get_main_camera_mut();
@@ -99,7 +138,7 @@ impl GameClient {
             &mouse_move_data,
             &mouse_input_data,
             &mouse_delta,
-            main_camera
+            main_camera,
         );
     }
 
