@@ -277,7 +277,7 @@ pub fn run_application() {
     // application setting
     let app_name: String = "Stone Age".to_string();
     let app_version: u32 = 1;
-    let initial_window_size: Vector2<i32> = Vector2::new(1024, 768);
+    let initial_window_size: Vector2<i32> = Vector2::new(1280, 720);
     let window_mode = WindowMode::WindowMode;
     let log_level = LevelFilter::Info;
 

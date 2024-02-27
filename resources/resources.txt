@@ -35,7 +35,6 @@ resources/externals/textures/ui/crosshair_box.png
 resources/externals/textures/ui/crosshair.png
 resources/externals/textures/effects/fire.png
 resources/externals/textures/effects/smoke.png
-resources/externals/textures/blender_assets.cats.txt
 resources/externals/textures/characters/jack/jack_d.png
 resources/externals/textures/environments/cliff_grass_d.png
 resources/externals/textures/environments/snow_moutain.png
@@ -538,6 +537,7 @@ resources/shaders/render_test.frag
 resources/shaders/render_test.vert
 resources/scenes/intro_stage.scene
 resources/scenes/sponza.scene
+resources/game_data/characters/mutant.data
 resources/game_data/characters/jack.data
 resources/game_data/blocks/cliff_grass.data
 resources/game_data/game_scenes/intro_stage.game_scene

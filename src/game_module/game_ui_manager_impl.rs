@@ -68,7 +68,7 @@ impl UISwitch {
 
         let ui_text_widget = UIManager::create_widget("ui_text_widget", UIWidgetTypes::Default);
         let ui_component = ptr_as_mut(ui_text_widget.as_ref()).get_ui_component_mut();
-        ui_component.set_text("Tab: Toggle GameMode <-> NavigationMode\nNavigationMode\n\tMove:W,A,S,D\n\tRotation:Hold Mouse Right Click\nGameMode\n\tMove: A,S,Left,Right\n\tJump:SpaceBar\n\tAttack:Mouse Left Click\n");
+        ui_component.set_text("Tab: Toggle GameMode <-> NavigationMode\nNavigationMode\n\tTime Of Day: Comma, Dot\n\tMove:W,A,S,D,Shift(Boost)\n\tAltitude:Q,E\n\tRotation:Hold Mouse Right Click\nGameMode\n\tMove: A,S,Left,Right\n\tJump:SpaceBar\n\tAttack:Mouse Left Click\n");
         ui_component.set_pos_hint_x(Some(0.0));
         ui_component.set_pos_hint_y(Some(0.0));
         ui_component.set_size_hint_x(Some(1.0));
@@ -78,7 +78,7 @@ impl UISwitch {
         ui_component.set_font_color(get_color32(255, 255, 255, 255));
         // ui_component.set_border_color(get_color32(0, 0, 0, 128));
         // ui_component.set_halign(HorizontalAlign::CENTER);
-        ui_component.set_valign(VerticalAlign::BOTTOM);
+        // ui_component.set_valign(VerticalAlign::BOTTOM);
         ui_component.set_margin(10.0);
         // ui_component.set_round(10.0);
         // ui_component.set_border(2.0);

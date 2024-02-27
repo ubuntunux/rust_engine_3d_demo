@@ -3,9 +3,10 @@
     "player": {"_character_data_name":"jack", "_position":[0.0,1.0,0.0], "_rotation":[0.0,0.0,0.0], "_scale":[0.25,0.25,0.25]}
 },
 "_characters":{
-    "enemy00": {"_character_data_name":"jack", "_position":[2.0,1.0,0.0], "_rotation":[0.0,0.0,0.0], "_scale":[0.25,0.25,0.25]},
-    "enemy01": {"_character_data_name":"jack", "_position":[-2.0,1.0,0.0], "_rotation":[0.0,0.0,0.0], "_scale":[0.25,0.25,0.25]},
-    "enemy02": {"_character_data_name":"jack", "_position":[0.0,1.0,0.0], "_rotation":[0.0,0.0,0.0], "_scale":[1.0,1.0,1.0]}
+    "enemy00": {"_character_data_name":"mutant", "_position":[3.0,1.0,0.0], "_rotation":[0.0,0.0,0.0], "_scale":[1.25,1.25,1.25]},
+    "enemy01": {"_character_data_name":"mutant", "_position":[-3.0,1.0,0.0], "_rotation":[0.0,0.0,0.0], "_scale":[1.25,1.25,1.25]},
+    "enemy02": {"_character_data_name":"mutant", "_position":[0.0,1.0,0.0], "_rotation":[0.0,0.0,0.0], "_scale":[1.5,1.5,1.5]},
+    "enemy03": {"_character_data_name":"mutant", "_position":[-6.0,1.0,0.0], "_rotation":[0.0,0.0,0.0], "_scale":[2.0,2.0,2.0]}
 },
 "_blocks":{
     "rock00":{"_block_data_name":"cliff_grass","_position":[2.0,10.0,0.0],"_rotation":[0.0,0.0,0.0],"_scale":[1.0,1.0,1.0]},

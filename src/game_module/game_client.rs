@@ -75,7 +75,11 @@ impl GameClient {
     }
 
     pub fn set_game_mode(&mut self, _is_game_mode: bool) {
-        //self.get_game_ui_manager_mut().show_ui(is_game_mode);
+        let game_scene_manager = self.get_game_scene_manager();
+        let scene_manager = game_scene_manager.get_scene_manager();
+        let main_camera = scene_manager.get_main_camera_mut();
+        main_camera._transform_object.set_yaw(0.0);
+
     }
 
     pub fn update_game_mode(&mut self, _delta_time: f64) {

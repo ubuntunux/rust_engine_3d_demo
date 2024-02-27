@@ -1,0 +1,7 @@
+{"_character_type":"UrsusArctos",
+"_model_data_name":"mutant",
+"_idle_animation_mesh":"mutant",
+"_walk_animation_mesh":"mutant",
+"_jump_animation_mesh":"mutant",
+"_attack_animation_mesh":"mutant",
+"_max_hp":100}
