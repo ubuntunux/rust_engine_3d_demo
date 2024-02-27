@@ -1,3 +1,0 @@
-pub const CAMERA_MOVE_SPEED: f32 = 20.0;
-pub const CAMERA_PAN_SPEED: f32 = 0.05;
-pub const CAMERA_ROTATION_SPEED: f32 = 0.005;

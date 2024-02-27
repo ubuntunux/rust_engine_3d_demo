@@ -1,0 +1,7 @@
+{"_character_type":"UrsusArctos",
+"_model_data_name":"characters/jack",
+"_idle_animation_mesh":"characters/jack/jack_idle",
+"_walk_animation_mesh":"characters/jack/jack_walk",
+"_jump_animation_mesh":"characters/jack/jack_jump",
+"_attack_animation_mesh":"characters/jack/jack_attack",
+"_max_hp":100}

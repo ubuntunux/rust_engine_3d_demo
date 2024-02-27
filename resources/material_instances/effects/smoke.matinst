@@ -1,0 +1,7 @@
+{"material_name": "effect/render_particle",
+ "material_parameters": {
+    "textureBase": "effects/smoke",
+    "textureMaterial": "common/flat_yellow",
+    "textureNormal": "common/default_n"
+    }
+}

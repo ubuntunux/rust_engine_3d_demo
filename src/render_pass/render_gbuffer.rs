@@ -1,9 +1,10 @@
+use std::path::PathBuf;
+
 use ash::vk;
 use rust_engine_3d::renderer::push_constants::PushConstant_RenderObject;
 use rust_engine_3d::renderer::renderer_data::RenderObjectType;
 use rust_engine_3d::resource::resource::RenderPassDataCreateInfoMap;
 use rust_engine_3d::vulkan_context::render_pass::PipelinePushConstantData;
-use std::path::PathBuf;
 
 pub fn get_render_pass_data_create_info(
     render_object_type: RenderObjectType,

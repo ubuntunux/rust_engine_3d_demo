@@ -1,17 +1,19 @@
-pub const GRAVITY: f32 = 9.8;
+// editor
+pub const EDITOR_CAMERA_MOVE_SPEED: f32 = 20.0;
+pub const EDITOR_CAMERA_PAN_SPEED: f32 = 0.05;
+pub const EDITOR_CAMERA_ROTATION_SPEED: f32 = 0.005;
 
-pub const CHECK_TARGET_DISTANCE_MAX: f32 = 100.0;
+// game constant
+pub const CAMERA_OFFSET_Y: f32 = 1.5;
+pub const CAMERA_PITCH: f32 = 0.2;
+pub const CAMERA_DISTANCE_MIN: f32 = 4.0;
+pub const CAMERA_DISTANCE_MAX: f32 = 10.0;
+pub const CAMERA_ZOOM_SPEED: f32 = 4.0;
 
-pub const FIRE_PITCH_MIN: f32 = -0.75;
-pub const FIRE_PITCH_MAX: f32 = 0.75;
-
-pub const SCROLL_DELTA_TO_CAMERA_DISTANCE_SPEED: f32 = 8.0;
-pub const CAMERA_DISTANCE_MIN: f32 = 10.0;
-pub const CAMERA_DISTANCE_MAX: f32 = 100.0;
-pub const CAMERA_DISTANCE_SPEED: f32 = 5.0;
-pub const CAMERA_EDGE_SCROLL_SPEED: f32 = 100.0;
-pub const CAMERA_EDGE_SCROLL_SPEED_BY_MOUSE: f32 = 0.05;
-
-pub const MOUSE_PITCH_MIN: f32 = -1.5;
-pub const MOUSE_PITCH_MAX: f32 = 1.5;
-pub const MOUSE_ROTATION_SPEED: f32 = 0.002;
+// player
+pub const PLAYER_MOVE_SPEED: f32 = 3.0;
+pub const PLAYER_JUMP_SPEED: f32 = 12.0;
+pub const GRAVITY: f32 = 30.0;
+pub const GROUND_HEIGHT: f32 = 9.0;
+pub const CONTINUOUS_ATTACK_TIME: f32 = 0.15;
+pub const ATTACK_TIME: f32 = 0.15;

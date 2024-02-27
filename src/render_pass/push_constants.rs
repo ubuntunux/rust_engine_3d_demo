@@ -1,3 +1,5 @@
+use std::fmt::Debug;
+
 use nalgebra::Vector4;
 use rust_engine_3d::renderer::push_constants::{
     PushConstant, PushConstantName, PushConstantParameter,
@@ -5,7 +7,6 @@ use rust_engine_3d::renderer::push_constants::{
 use rust_engine_3d::utilities::json::convert_json_value_to_push_constant_parameter;
 use serde::{Deserialize, Serialize};
 use serde_json;
-use std::fmt::Debug;
 
 #[repr(C)]
 #[allow(non_camel_case_types)]
